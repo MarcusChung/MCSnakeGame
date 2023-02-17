@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Obstacle
+  - Food
   layers:
   - Default
   - TransparentFX
@@ -46,4 +48,10 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 2463403617
+    locked: 0
+  - name: Player
+    uniqueID: 319805507
+    locked: 0
+  - name: Food
+    uniqueID: 3716236753
     locked: 0
