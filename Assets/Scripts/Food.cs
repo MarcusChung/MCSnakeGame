@@ -12,8 +12,10 @@ public class Food : MonoBehaviour
     private void randomPosition(){
         int x = Random.Range(-8, 8);
         int y = Random.Range(-8, 6);
-        transform.position = new Vector2(x, y);
+        startPoint.position = new Vector2(x, y);
         transform.position = startPoint.position;
+        Debug.Log("Food position: " + transform.position);
+        Debug.Log("Start position: " + startPoint.position);
     }
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D other) {

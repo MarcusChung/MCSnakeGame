@@ -17,7 +17,7 @@ public class Snake : MonoBehaviour
         transform.position = startPoint.position;
         transform.rotation = Quaternion.Euler(0,0, -90);
         direction = Vector2.right;
-        Time.timeScale = 0.05f;
+        Time.timeScale = 0.1f;
         resetSegments();
     }
 
@@ -42,6 +42,7 @@ public class Snake : MonoBehaviour
     private void Update()
     {
         getUserInput();
+        collisionCheck();
     }
 
     private void getUserInput(){
@@ -85,6 +86,14 @@ public class Snake : MonoBehaviour
             Time.timeScale = 0;
         } else if(other.tag == "Food") {
             grow();
+        }
+    }
+
+    private void collisionCheck(){
+        for (int i= 1; i<segments.Count; i++){
+            if (segments[i].transform.position == transform.position){
+                Time.timeScale = 0;
+            }
         }
     }
 }
