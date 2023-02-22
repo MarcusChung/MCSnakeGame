@@ -4,9 +4,8 @@ using System.Collections.Generic;
 public class Snake : MonoBehaviour
 {
     Vector2 direction;
-    public GameObject segment;
-    public List<GameObject> segments = new List<GameObject>();
-    public Transform startPoint;
+    [SerializeField] private GameObject segment;
+    [SerializeField] private List<GameObject> segments = new List<GameObject>();
     // Start is called before the first frame update
     private void Start()
     {
@@ -14,10 +13,10 @@ public class Snake : MonoBehaviour
     }
     private void reset(){
         // pos, rot, dir, time
-        transform.position = startPoint.position;
+        transform.position = new Vector2(0,0);
         transform.rotation = Quaternion.Euler(0,0, -90);
         direction = Vector2.right;
-        Time.timeScale = 0.1f;
+        Time.timeScale = 0.2f;
         resetSegments();
     }
 
@@ -42,7 +41,6 @@ public class Snake : MonoBehaviour
     private void Update()
     {
         getUserInput();
-        collisionCheck();
     }
 
     private void getUserInput(){
@@ -82,17 +80,18 @@ public class Snake : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+       //collision checks
         if (other.gameObject.tag == "Obstacle"){
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
+            reset();
         } else if(other.tag == "Food") {
             grow();
         }
-    }
-
-    private void collisionCheck(){
+        // if player collides with tail
         for (int i= 1; i<segments.Count; i++){
             if (segments[i].transform.position == transform.position){
-                Time.timeScale = 0;
+                //Time.timeScale = 0;
+                reset();
             }
         }
     }

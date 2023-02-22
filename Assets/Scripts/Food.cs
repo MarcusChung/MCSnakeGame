@@ -1,8 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Food : MonoBehaviour
 {
-    public Transform startPoint;
+    private RandomScriptBehaviour randomFoodGenerator;
     // Start is called before the first frame update
     void Start()
     {
@@ -10,15 +11,13 @@ public class Food : MonoBehaviour
     }
 
     private void randomPosition(){
-        int x = Random.Range(-8, 8);
-        int y = Random.Range(-8, 6);
-        startPoint.position = new Vector2(x, y);
-        transform.position = startPoint.position;
-        Debug.Log("Food position: " + transform.position);
-        Debug.Log("Start position: " + startPoint.position);
+        int x = Random.Range(-17, 20);
+        int y = Random.Range(-7, 8);
+        transform.position = new Vector2(x, y);
     }
-    // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D other) {
         randomPosition();
+        randomFoodGenerator = FindObjectOfType<RandomScriptBehaviour>();
+        randomFoodGenerator.randomSprite();
     }
 }
