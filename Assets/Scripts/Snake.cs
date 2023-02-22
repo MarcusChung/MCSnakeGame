@@ -6,7 +6,6 @@ public class Snake : MonoBehaviour
     Vector2 direction;
     [SerializeField] private GameObject segment;
     [SerializeField] private List<GameObject> segments = new List<GameObject>();
-    // Start is called before the first frame update
     private void Start()
     {
         reset();
@@ -44,6 +43,21 @@ public class Snake : MonoBehaviour
     }
 
     private void getUserInput(){
+        // prevent snake from going backwards
+        if(direction == Vector2.up){
+            if (Input.GetKeyDown(KeyCode.S)) return;
+        }
+         if(direction == Vector2.down){
+            if (Input.GetKeyDown(KeyCode.W)) return;
+        }
+         if(direction == Vector2.right){
+            if (Input.GetKeyDown(KeyCode.A)) return;
+        }
+         if(direction == Vector2.left){
+            if (Input.GetKeyDown(KeyCode.D)) return;
+        }
+
+        // get input
         if (Input.GetKeyDown(KeyCode.W)) {
             direction = Vector2.up;
             transform.rotation = Quaternion.Euler (0, 0, 0);
