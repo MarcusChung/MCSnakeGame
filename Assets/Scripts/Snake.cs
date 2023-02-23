@@ -75,6 +75,12 @@ public class Snake : MonoBehaviour
         }
     }
 
+    public int getScore(){
+        //score
+        int score = segments.Count - 3;
+        return score;
+    }
+
     private void FixedUpdate() {
         moveSegments();
         moveSnake();
@@ -104,7 +110,7 @@ public class Snake : MonoBehaviour
         // if player collides with tail
         for (int i= 1; i<segments.Count; i++){
             if (segments[i].transform.position == transform.position){
-                //Time.timeScale = 0;
+                // Time.timeScale = 0;
                 reset();
             }
         }
