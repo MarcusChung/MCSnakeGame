@@ -10,5 +10,6 @@ public class Score : MonoBehaviour
     private void Update()
     {
         scoreText.SetText(player.GetComponent<Snake>().getScore().ToString());
+        
     }
 }

@@ -6,6 +6,7 @@ public class Snake : MonoBehaviour
     Vector2 direction;
     [SerializeField] private GameObject segment;
     [SerializeField] private List<GameObject> segments = new List<GameObject>();
+    [SerializeField] private GameObject snakeHead;
     private void Start()
     {
         reset();
@@ -43,6 +44,7 @@ public class Snake : MonoBehaviour
     }
 
     private void getUserInput(){
+
         // prevent snake from going backwards
         if(direction == Vector2.up){
             if (Input.GetKeyDown(KeyCode.S)) return;
@@ -102,17 +104,22 @@ public class Snake : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
        //collision checks
         if (other.gameObject.tag == "Obstacle"){
-            //Time.timeScale = 0;
-            reset();
+            
+            hideSnake();
+            // reset();
+            FindObjectOfType<GameManager>().GameOver();
         } else if(other.tag == "Food") {
             grow();
         }
         // if player collides with tail
         for (int i= 1; i<segments.Count; i++){
             if (segments[i].transform.position == transform.position){
-                // Time.timeScale = 0;
-                reset();
+                FindObjectOfType<GameManager>().GameOver();
             }
         }
+    }
+
+    private void hideSnake(){
+       snakeHead.SetActive(false);
     }
 }
