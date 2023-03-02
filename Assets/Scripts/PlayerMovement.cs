@@ -4,44 +4,69 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody2D rb;
     private Vector3Int gridPos;
-    
-    // public float moveSpeed = 5f;
-    // public Transform movePoint;
-    private void FixedUpdate()
-    {
-        // using transform.position on a rigidbody causes errors for collision detection. Use unity's built in movement instead.
-        // transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
-        // if(Vector3.Distance(transform.position,movePoint.position) <= .05f){
-        // if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
-        //     {
-        //         movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-        //     } else if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) 
-        //     {
-        //         movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-        //     }
-        // }
-      
-        if (Input.GetKey("d"))
+    private Vector2 direction;
+
+        private void Start()
         {
-           rb.velocity = new Vector3(5, 0);
+            reset();
         }
-        if (Input.GetKey("a"))
+       private void reset()
         {
-            rb.velocity = new Vector3(-5, 0);
+        // pos, rot, dir, time
+            transform.position = new Vector2(0,0);
+            transform.rotation = Quaternion.Euler(0,0, -90);
+            direction = Vector2.right;
+            Time.timeScale = 0.2f;
         }
-        if (Input.GetKey("s")){
-            rb.velocity = new Vector3(0, -5);
+      private void getUserInput()
+      {
+
+        // prevent snake from going backwards
+        if(direction == Vector2.up){
+            if (Input.GetKeyDown(KeyCode.S)) return;
         }
-        if (Input.GetKey("w"))
-        {
-           rb.velocity = new Vector3(0, 5);
+         if(direction == Vector2.down){
+            if (Input.GetKeyDown(KeyCode.W)) return;
         }
-        if (Input.GetKey("space"))
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector3(0, 7);
+         if(direction == Vector2.right){
+            if (Input.GetKeyDown(KeyCode.A)) return;
+        }
+         if(direction == Vector2.left){
+            if (Input.GetKeyDown(KeyCode.D)) return;
         }
 
+        // get input
+        if (Input.GetKeyDown(KeyCode.W)) {
+            direction = Vector2.up;
+            transform.rotation = Quaternion.Euler (0, 0, 0);
+        } else if (Input.GetKeyDown(KeyCode.S)) {
+            direction = Vector2.down;
+            transform.rotation = Quaternion.Euler (0, 0, 180);
+        } else if (Input.GetKeyDown(KeyCode.A)) {
+            direction = Vector2.left;
+            transform.rotation = Quaternion.Euler (0, 0, 90);
+        } else if (Input.GetKeyDown(KeyCode.D)) {
+            direction = Vector2.right;
+            transform.rotation = Quaternion.Euler (0, 0, -90);
+        } else if (Input.GetKeyDown(KeyCode.R)) {
+            reset();
+        }
+    }
+
+    private void Update()
+    {
+        getUserInput();
+    }
+    private void FixedUpdate()
+    {
+        moveSnake();
+    }
+
+    private void moveSnake()
+    {
+        float x = transform.position.x + direction.x;
+        float y = transform.position.y + direction.y;
+        transform.position = new Vector2(x, y);
     }
 }
