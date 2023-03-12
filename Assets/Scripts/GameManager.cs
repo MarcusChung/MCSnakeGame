@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private bool isGameOver = false;
-    //should i really be using a singleton here?
 
     [SerializeField] private GameObject deathScreenUI;
     public void GameOver()
@@ -15,7 +14,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void switchGameOverState(){
+    public void SwitchGameOverState(){
         isGameOver = !isGameOver;
     }
 

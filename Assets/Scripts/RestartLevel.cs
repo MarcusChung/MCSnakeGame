@@ -14,7 +14,7 @@ public class RestartLevel : MonoBehaviour
 
 	void TaskOnClick(){
 		FindObjectOfType<GameManager>().RestartGame();
-        FindObjectOfType<GameManager>().switchGameOverState();
+        FindObjectOfType<GameManager>().SwitchGameOverState();
         deathScreenUI.SetActive(false);
 	}
 }

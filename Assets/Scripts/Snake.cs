@@ -9,45 +9,47 @@ public class Snake : MonoBehaviour
     [SerializeField] private GameObject snakeHead;
     private void Start()
     {
-        resetSegments();
+        ResetSegments();
       
     }
     
  
-    private void resetSegments(){
+    private void ResetSegments(){
         for (int i= 1; i<segments.Count; i++){
             Destroy(segments[i].gameObject);
         }
         segments.Clear();
         segments.Add(gameObject);
         for (int i= 1; i<3; i++){
-            grow();
+            Grow();
         }
     }
 
      
 
-    private void grow() 
+    private void Grow() 
     {
         GameObject newSegment = Instantiate(segment);
         newSegment.transform.position = segments[segments.Count-1].transform.position;
         segments.Add(newSegment);
     }
 
-    public int getScore()
+    public int GetScore()
     {
         //score
         int score = segments.Count - 3;
         return score;
     }
 
+    // public int GetScore => segments.Count -3;
+
     private void FixedUpdate()
     {
-        moveSegments();
+        MoveSegments();
         // moveSnake();
     }
 
-    private void moveSegments()
+    private void MoveSegments()
     {
         //put on top of the one in the front
         for (int i= segments.Count-1; i>0; i--){
@@ -58,22 +60,23 @@ public class Snake : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
        //collision checks
-        if (other.gameObject.tag == "Obstacle"){
-            hideSnake();
+       Obstacle obstacle = other.GetComponent<Obstacle>();
+        if (other.gameObject.CompareTag("Obstacle")){
+            HideSnake();
             FindObjectOfType<GameManager>().GameOver();
-        } else if(other.tag == "Food") {
-            grow();
+        } else if(other.gameObject.CompareTag("Food")) {
+            Grow();
         }
         // if player collides with tail
             for (int i= 1; i<segments.Count; i++){
                 if (segments[i].transform.position == transform.position){
-                    hideSnake();
+                    HideSnake();
                     FindObjectOfType<GameManager>().GameOver();
                 }
             }
     }
 
-    private void hideSnake()
+    private void HideSnake()
     {
        snakeHead.SetActive(false);
     }

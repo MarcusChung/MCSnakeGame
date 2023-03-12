@@ -9,9 +9,9 @@ public class PlayerMovement : MonoBehaviour
 
         private void Start()
         {
-            reset();
+            Reset();
         }
-       private void reset()
+       private void Reset()
         {
         // pos, rot, dir, time
             transform.position = new Vector2(0,0);
@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
             direction = Vector2.right;
             Time.timeScale = 0.2f;
         }
-      private void getUserInput()
+      private void GetUserInput()
       {
 
         // prevent snake from going backwards
@@ -50,13 +50,13 @@ public class PlayerMovement : MonoBehaviour
             direction = Vector2.right;
             transform.rotation = Quaternion.Euler (0, 0, -90);
         } else if (Input.GetKeyDown(KeyCode.R)) {
-            reset();
+            Reset();
         }
     }
 
     private void Update()
     {
-        getUserInput();
+        GetUserInput();
     }
     private void FixedUpdate()
     {

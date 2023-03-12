@@ -9,7 +9,7 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        scoreText.SetText(player.GetComponent<Snake>().getScore().ToString());
+        scoreText.SetText(player.GetComponent<Snake>().GetScore().ToString());
         
     }
 }
