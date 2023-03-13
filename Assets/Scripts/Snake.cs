@@ -56,23 +56,24 @@ public class Snake : MonoBehaviour
             segments[i].transform.position = segments[i-1].transform.position;
         }
     }
-
+[Tooltip("layer 6 -> obstacle, layer 7 -> food")]
     private void OnTriggerEnter2D(Collider2D other)
     {
-       //collision checks
-       Obstacle obstacle = other.GetComponent<Obstacle>();
-        if (other.gameObject.CompareTag("Obstacle")){
-            HideSnake();
-            FindObjectOfType<GameManager>().GameOver();
-        } else if(other.gameObject.CompareTag("Food")) {
-            Grow();
-        }
-        // if player collides with tail
-            for (int i= 1; i<segments.Count; i++){
+    //collision checks
+    if (other.gameObject.layer == 6){
+        HideSnake();
+        FindObjectOfType<GameManager>().GameOver(true);
+    } else if(other.gameObject.layer == 7) {
+        Grow();
+    }
+
+    //less efficient as the snake grows
+    for (int i= 1; i<segments.Count; i++){
                 if (segments[i].transform.position == transform.position){
                     HideSnake();
-                    FindObjectOfType<GameManager>().GameOver();
+                    FindObjectOfType<GameManager>().GameOver(true);
                 }
+                // Debug.Log(segments[i].gameObject.layer);
             }
     }
 

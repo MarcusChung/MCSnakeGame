@@ -1,31 +1,31 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     private bool isGameOver = false;
-
+    private int score = 0;
     [SerializeField] private GameObject deathScreenUI;
-    public void GameOver()
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Transform player;
+    public void GameOver(bool flag)
     {
-        if (!isGameOver) {
+        isGameOver = flag;
+        if (isGameOver == true) {
         Debug.Log("Game Over");
-        isGameOver = true;
         deathScreenUI.SetActive(true);
+        } else {
+            deathScreenUI.SetActive(false);
         }
-    }
-
-    public void SwitchGameOverState(){
-        isGameOver = !isGameOver;
-    }
-
-    public void RestartGame()
-    {
-        Debug.Log("Restarting Game");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void GameWon()
     {
         Debug.Log("Game Won");
+    }
+
+    public int GetScore()
+    {
+        score = player.GetComponent<Snake>().GetScore();
+        return score;
     }
 }
