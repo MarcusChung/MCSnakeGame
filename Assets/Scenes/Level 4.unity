@@ -18320,6 +18320,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 3340121193646727194, guid: 891d16f6b083280428fb0e5f84aa417d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3340121193646727197, guid: 891d16f6b083280428fb0e5f84aa417d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -21693,6 +21697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c69cea63c857d4fb282cfdcfbebc44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _commandProcessor: {fileID: 0}
 --- !u!1 &1807776978
 GameObject:
   m_ObjectHideFlags: 0

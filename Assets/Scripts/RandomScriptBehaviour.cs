@@ -15,10 +15,4 @@ public class RandomScriptBehaviour : MonoBehaviour
     public void randomSprite(){
         gameObject.GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, sprites.Length)];
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

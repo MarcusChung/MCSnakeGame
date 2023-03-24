@@ -33,6 +33,13 @@ public class Snake : MonoBehaviour
         newSegment.transform.position = segments[segments.Count-1].transform.position;
         segments.Add(newSegment);
     }
+    private void Shrink() 
+    {
+        if (segments.Count > 3){
+            Destroy(segments[segments.Count-1].gameObject);
+            segments.RemoveAt(segments.Count-1);
+        }
+    }
 
     public int GetScore()
     {
@@ -56,7 +63,8 @@ public class Snake : MonoBehaviour
             segments[i].transform.position = segments[i-1].transform.position;
         }
     }
-[Tooltip("layer 6 -> obstacle, layer 7 -> food")]
+
+    [Tooltip("layer 6 -> obstacle, layer 7 -> food, layer 8 -> poisonFood")]
     private void OnTriggerEnter2D(Collider2D other)
     {
     //collision checks
@@ -65,6 +73,8 @@ public class Snake : MonoBehaviour
         FindObjectOfType<GameManager>().GameOver(true);
     } else if(other.gameObject.layer == 7) {
         Grow();
+    } else if(other.gameObject.layer == 8) {
+        Shrink();
     }
 
     //less efficient as the snake grows
