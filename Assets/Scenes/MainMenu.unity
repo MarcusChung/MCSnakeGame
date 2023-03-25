@@ -1350,9 +1350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd57b727e663c6449a690e35f6dbb1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  scoreText: {fileID: 0}
   deathScreenUI: {fileID: 1182002883}
+  scoreText: {fileID: 0}
+  player: {fileID: 0}
 --- !u!4 &1451552690
 Transform:
   m_ObjectHideFlags: 0

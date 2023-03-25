@@ -37,8 +37,6 @@ public class Food : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) {
         randomPosition();
-        randomFoodGenerator = FindObjectOfType<RandomScriptBehaviour>();
-        randomFoodGenerator.randomSprite();
     }
 
      

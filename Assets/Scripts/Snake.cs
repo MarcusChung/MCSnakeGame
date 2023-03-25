@@ -7,6 +7,8 @@ public class Snake : MonoBehaviour
     [SerializeField] private GameObject segment;
     [SerializeField] private List<GameObject> segments = new List<GameObject>();
     [SerializeField] private GameObject snakeHead;
+
+     private RandomScriptBehaviour randomFoodGenerator;
     private void Start()
     {
         ResetSegments();
@@ -43,13 +45,9 @@ public class Snake : MonoBehaviour
 
     public int GetScore()
     {
-        //score
-        int score = segments.Count - 3;
-        return score;
+        return segments.Count - 3;
     }
-
-    // public int GetScore => segments.Count -3;
-
+    
     private void FixedUpdate()
     {
         MoveSegments();
@@ -73,6 +71,9 @@ public class Snake : MonoBehaviour
         FindObjectOfType<GameManager>().GameOver(true);
     } else if(other.gameObject.layer == 7) {
         Grow();
+        //when snake eats food it will change the sprite
+        randomFoodGenerator = FindObjectOfType<RandomScriptBehaviour>();
+        randomFoodGenerator.randomSprite();
     } else if(other.gameObject.layer == 8) {
         Shrink();
     }
@@ -83,8 +84,13 @@ public class Snake : MonoBehaviour
                     HideSnake();
                     FindObjectOfType<GameManager>().GameOver(true);
                 }
-                // Debug.Log(segments[i].gameObject.layer);
             }
+
+    int score = GetScore();
+    if (score % 10 == 0 && score != 0){
+        FindObjectOfType<GameManager>().CheckScore();
+    }
+    
     }
 
     private void HideSnake()
