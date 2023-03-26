@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour, IEntity
 {
-    private Vector3Int gridPos;
+    private Vector2 gridPos;
     private Vector2 direction;
     private bool undoActive;
     private bool playerInput;
@@ -75,6 +75,8 @@ public class PlayerMovement : MonoBehaviour, IEntity
             // Reset()
             undoActive = true;
         }
+
+        // Debug.Log("ACTUAL Direction: " + direction);
     }
 
     private void Update()
@@ -88,7 +90,7 @@ public class PlayerMovement : MonoBehaviour, IEntity
         }
         else if (playerInput){
             // Debug.Log("moving");
-            _commandProcessor.ExecuteCommand(new MoveCommand(this, direction, transform));
+            _commandProcessor.ExecuteCommand(new MoveCommand(this, direction, transform, gridPos));
             playerInput = false;
         }
         GetUserInput();
@@ -104,5 +106,7 @@ public class PlayerMovement : MonoBehaviour, IEntity
         float x = transform.position.x + direction.x;
         float y = transform.position.y + direction.y;
         transform.position = new Vector2(x, y);
+        gridPos = transform.position;
+        // Debug.Log("transform " + transform.position);
     }
 }

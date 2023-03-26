@@ -7,12 +7,13 @@ public class Snake : MonoBehaviour
     [SerializeField] private GameObject segment;
     [SerializeField] private List<GameObject> segments = new List<GameObject>();
     [SerializeField] private GameObject snakeHead;
+    private RandomScriptBehaviour randomFoodGenerator;
+    private List<Vector2> segmentPositions = new List<Vector2>();
 
-     private RandomScriptBehaviour randomFoodGenerator;
     private void Start()
     {
         ResetSegments();
-      
+        segmentPositions.Add(transform.position);
     }
     
  
@@ -34,6 +35,7 @@ public class Snake : MonoBehaviour
         GameObject newSegment = Instantiate(segment);
         newSegment.transform.position = segments[segments.Count-1].transform.position;
         segments.Add(newSegment);
+        segmentPositions.Add(newSegment.transform.position);
     }
     private void Shrink() 
     {
@@ -41,6 +43,18 @@ public class Snake : MonoBehaviour
             Destroy(segments[segments.Count-1].gameObject);
             segments.RemoveAt(segments.Count-1);
         }
+    }
+
+    public void FreezeSnake(){
+        Time.timeScale = 0;
+    }
+
+    public void SlowSnake(float slowFactor){
+        Time.timeScale = slowFactor;
+    }
+
+    public void Unslow(float unslowFactor){
+        Time.timeScale = unslowFactor;
     }
 
     public int GetScore()
@@ -51,7 +65,6 @@ public class Snake : MonoBehaviour
     private void FixedUpdate()
     {
         MoveSegments();
-        // moveSnake();
     }
 
     private void MoveSegments()
@@ -62,12 +75,12 @@ public class Snake : MonoBehaviour
         }
     }
 
-    [Tooltip("layer 6 -> obstacle, layer 7 -> food, layer 8 -> poisonFood")]
+    [Tooltip("layer 6 -> obstacle, layer 7 -> food, layer 8 -> poisonFood, layer 9 -> freeze item")]
     private void OnTriggerEnter2D(Collider2D other)
     {
     //collision checks
     if (other.gameObject.layer == 6){
-        HideSnake();
+        HideSnakeHead();
         FindObjectOfType<GameManager>().GameOver(true);
     } else if(other.gameObject.layer == 7) {
         Grow();
@@ -76,24 +89,36 @@ public class Snake : MonoBehaviour
         randomFoodGenerator.randomSprite();
     } else if(other.gameObject.layer == 8) {
         Shrink();
+        FindObjectOfType<BadFood>().AccumulatePoison();
+    } else if(other.gameObject.layer == 9) {
+        FindObjectOfType<FreezeItem>().SlowSnake();
     }
 
-    //less efficient as the snake grows
-    for (int i= 1; i<segments.Count; i++){
-                if (segments[i].transform.position == transform.position){
-                    HideSnake();
-                    FindObjectOfType<GameManager>().GameOver(true);
-                }
-            }
+    /** less efficient as the snake grows
+     for (int i= 1; i<segments.Count; i++){
+                 if (segments[i].transform.position == transform.position){
+                     HideSnake();
+                     FindObjectOfType<GameManager>().GameOver(true);
+                 }
+             }
+    **/
 
-    int score = GetScore();
-    if (score % 10 == 0 && score != 0){
-        FindObjectOfType<GameManager>().CheckScore();
+    // Check for collisions with body segments (more efficient)
+    Vector2 headPosition = transform.position;
+    for (int i = 1; i < segmentPositions.Count; i++) {
+        if (headPosition == segmentPositions[i]) {
+            HideSnakeHead();
+            FindObjectOfType<GameManager>().GameOver(true);
+        }
     }
+
+
+    FindObjectOfType<GameManager>().CheckScore();
+
     
     }
 
-    private void HideSnake()
+    public void HideSnakeHead()
     {
        snakeHead.SetActive(false);
     }

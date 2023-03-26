@@ -3,18 +3,24 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    private bool isGameOver = false;
+    public bool isGameOver { get; private set; } = false;
     private int score = 0;
+    // private int poisonAccumulation = 0;
     [SerializeField] private GameObject deathScreenUI;
     [SerializeField] private GameObject winScreenUI;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Transform player;
+
+    public GameObject foodPrefab;
+    public int numFoodObjects = 10;
     public void GameOver(bool flag)
     {
         isGameOver = flag;
         if (isGameOver == true) {
         Debug.Log("Game Over");
         deathScreenUI.SetActive(true);
+        // Time.timeScale = 0; i will avoid using timescale as animations won't work
+        // FindObjectOfType<Snake>().HideSnakeHead();
         } else {
             deathScreenUI.SetActive(false);
         }
@@ -22,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public void GameWon()
     {
-       Time.timeScale = 0;
+    //    FindObjectOfType<Snake>().HideSnakeHead();
        winScreenUI.SetActive(true);
        Debug.Log("Game Won");
     }
@@ -36,6 +42,7 @@ public class GameManager : MonoBehaviour
         switch(scene){
             case 1:
             if (GetScore() == 10) GameWon();
+            // if (GetScore() == 2) SpawnObject();
             break;
             case 2:
             if (GetScore() == 20) GameWon();
@@ -54,4 +61,5 @@ public class GameManager : MonoBehaviour
         score = player.GetComponent<Snake>().GetScore();
         return score;
     }
+
 }

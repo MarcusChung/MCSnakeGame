@@ -17,10 +17,6 @@ public class LevelSelector : MonoBehaviour
     }
 
     private void OpenScene() {
-        try {
             SceneManager.LoadScene(sceneName);
-        } catch (System.Exception e) {
-            Debug.Log("Scene not found: Check spelling of scene and try again");
-        }
     } 
 }

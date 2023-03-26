@@ -6,4 +6,6 @@ public interface IEntity
 {
     Transform transform { get; }
     // Vector2 direction { get; }
+
+    
 }
