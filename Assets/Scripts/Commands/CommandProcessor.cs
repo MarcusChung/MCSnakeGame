@@ -21,6 +21,10 @@ public class CommandProcessor : MonoBehaviour
             var command = _commands.Pop();
             command.Undo();
         }
+    }
+}
+
+
 
         // if (_currentCommandIndex < 0) return;
 
@@ -29,5 +33,3 @@ public class CommandProcessor : MonoBehaviour
         // _commands.RemoveAt(_currentCommandIndex);
         // _currentCommandIndex--;
         
-    }
-}

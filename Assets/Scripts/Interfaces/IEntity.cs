@@ -5,7 +5,6 @@ using UnityEngine;
 public interface IEntity
 {
     Transform transform { get; }
-    // Vector2 direction { get; }
-
-    
+    void SetDirection(Vector2 direction);
+    Vector2 GetDirection();
 }

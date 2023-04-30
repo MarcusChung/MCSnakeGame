@@ -70,6 +70,10 @@ public class Food : MonoBehaviour
             {
                 occupied = true;
                 break;
+            } else if(segment.layer == 9 && segment.transform.position == new Vector3(x,y,0))
+            {
+                occupied = true;
+                break;
             }
         }
         if (occupied)

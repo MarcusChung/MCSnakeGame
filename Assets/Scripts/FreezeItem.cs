@@ -17,8 +17,6 @@ public class FreezeItem : Food
     {
         Debug.Log("Slow Snake");
         Time.timeScale = slowFactor;
-        // Call the FreezeSnake method to freeze the snake while time is slowed down
-        FindObjectOfType<Snake>().SlowSnake(0.1f);
         // Wait for the slow duration
         StartCoroutine(ResetTimeScale());
     }
@@ -28,6 +26,8 @@ public class FreezeItem : Food
     yield return new WaitForSeconds(slowDuration);
     FindObjectOfType<Snake>().Unslow(0.2f);
     }
+
+    
 
 }
 

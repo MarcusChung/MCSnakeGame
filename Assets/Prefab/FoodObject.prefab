@@ -125,6 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309a2b1449bcbbc41bc53494facb4ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  badFoodPrefab: {fileID: 0}
+  numFoodObjects: 10
 --- !u!114 &6919196390699190942
 MonoBehaviour:
   m_ObjectHideFlags: 0
