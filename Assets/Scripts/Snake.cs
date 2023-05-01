@@ -11,7 +11,7 @@ public class Snake : MonoBehaviour
     private RandomScriptBehaviour randomFoodGenerator;
     private List<Vector2> segmentPositions = new List<Vector2>();
     private GameManager gameManager;
-
+    public int prevSnakeSegmentsCount;
     private FreezeItem freezeItem;
     private BadFood badFood;
 
@@ -24,7 +24,11 @@ public class Snake : MonoBehaviour
         ResetSegments();
         segmentPositions.Add(transform.position);
         gameManager = FindObjectOfType<GameManager>();
+        TempImmunity();
+    }
 
+    public void TempImmunity()
+    {
         snakeHead.layer = SNAKE_HEAD_LAYER;
         StartCoroutine(ResetSnakeHeadLayer());
     }
@@ -59,22 +63,19 @@ public class Snake : MonoBehaviour
         segmentPositions.Insert(segments.Count - 1, newSegment.transform.position); // add the new segment position to the list
         //gives the new segment the layer "SnakeBody"
         newSegment.layer = SNAKE_BODY_LAYER;
+        prevSnakeSegmentsCount = segments.Count;
         segments.Add(newSegment);
+       
     }
-    private void Shrink()
+    public void Shrink()
     {
         if (segments.Count > 3)
         {
             Destroy(segments[segments.Count - 1].gameObject);
             segments.RemoveAt(segments.Count - 1);
+            // prevSnakeSegmentsCount = segments.Count;
         }
     }
-
-
-    // public void SlowSnake(float slowFactor)
-    // {
-    //     Time.timeScale = slowFactor;
-    // }
 
     public void Unslow(float unslowFactor)
     {
@@ -143,7 +144,5 @@ public class Snake : MonoBehaviour
     {
         snakeHead.SetActive(false);
     }
-
-
 
 }

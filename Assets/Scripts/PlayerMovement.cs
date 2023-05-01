@@ -9,12 +9,14 @@ public class PlayerMovement : MonoBehaviour, IEntity
     private Vector2 gridPos;
     private bool undoActive;
     private bool playerKeyPressed;
+    private bool collidedFood;
     private FreezeItem freezeItem;
-
+    private Snake snake;
     [SerializeField] private CommandProcessor _commandProcessor;
 
     private void Start()
     {
+        snake = FindObjectOfType<Snake>();
         freezeItem = FindObjectOfType<FreezeItem>();
         Reset();
     }
@@ -88,6 +90,13 @@ public class PlayerMovement : MonoBehaviour, IEntity
     {
         return direction;
     }
+
+    public void RemoveSegment()
+    {
+        snake.Shrink();
+    }
+
+    
     private void Update()
     {
         if (undoActive)
@@ -96,6 +105,7 @@ public class PlayerMovement : MonoBehaviour, IEntity
             {
                 _commandProcessor.UndoCommand();
                 undoActive = false;
+                snake.TempImmunity();
             }
         }
         else
@@ -108,13 +118,20 @@ public class PlayerMovement : MonoBehaviour, IEntity
         if (playerKeyPressed)
         {
             Debug.Log("Executing command");
-            _commandProcessor.ExecuteCommand(new MoveCommand(this, direction, transform, transform.position));
+            _commandProcessor.ExecuteCommand(new MoveCommand(this, direction, transform, transform.position, snake.segments.Count));
             playerKeyPressed = false;
         }
         else
         {
             moveSnake();
         }
+   
+    }
+
+
+    public int prevSnakeSegments()
+    {
+        return snake.prevSnakeSegmentsCount;
     }
 
     private void moveSnake()
@@ -124,4 +141,5 @@ public class PlayerMovement : MonoBehaviour, IEntity
         transform.position = new Vector2(x, y);
         gridPos = transform.position;
     }
+
 }
