@@ -1351,8 +1351,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathScreenUI: {fileID: 1182002883}
+  winScreenUI: {fileID: 0}
   scoreText: {fileID: 0}
   player: {fileID: 0}
+  foodPrefab: {fileID: 0}
+  numFoodObjects: 10
 --- !u!4 &1451552690
 Transform:
   m_ObjectHideFlags: 0
