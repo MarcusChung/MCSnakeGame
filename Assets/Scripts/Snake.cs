@@ -65,7 +65,7 @@ public class Snake : MonoBehaviour
         newSegment.layer = SNAKE_BODY_LAYER;
         prevSnakeSegmentsCount = segments.Count;
         segments.Add(newSegment);
-       
+
     }
     public void Shrink()
     {
@@ -82,9 +82,21 @@ public class Snake : MonoBehaviour
         Time.timeScale = unslowFactor;
     }
 
-    public int GetScore()
+
+    private int score = 0;
+    public void IncrementScore()
     {
-        return segments.Count - 3;
+        score++;
+
+        gameManager.CheckScore(score);
+    }
+
+    public void decrementScore()
+    {
+        if(score > 0){
+        score--;
+        }
+        gameManager.CheckScore(score);
     }
 
     private void FixedUpdate()
@@ -117,10 +129,12 @@ public class Snake : MonoBehaviour
             //when snake eats food it will change the sprite
             randomFoodGenerator = FindObjectOfType<RandomScriptBehaviour>();
             randomFoodGenerator.randomSprite();
+            IncrementScore();
         }
         else if (other.gameObject.layer == 8)
         {
             Shrink();
+            decrementScore();
             badFood.AccumulatePoison();
         }
         else if (other.gameObject.layer == 9)
@@ -137,7 +151,7 @@ public class Snake : MonoBehaviour
             HideSnakeHead();
             gameManager.GameOver(true);
         }
-        gameManager.CheckScore();
+
     }
 
     public void HideSnakeHead()

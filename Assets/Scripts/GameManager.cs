@@ -4,62 +4,68 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool isGameOver { get; private set; } = false;
-    private int score = 0;
+    public int score { get; private set; } = 0;
+    ScoreSystem scoreSystem;
     // private int poisonAccumulation = 0;
     [SerializeField] private GameObject deathScreenUI;
     [SerializeField] private GameObject winScreenUI;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Transform player;
-
+    private Level currentLevel;
+    private const int LEVEL_SCORE_INCREMENT = 10;
     public GameObject foodPrefab;
     public int numFoodObjects = 10;
+
+    private void Start()
+    {
+        scoreSystem = FindObjectOfType<ScoreSystem>();
+        score = scoreSystem.CurrentScore;
+    }
     public void GameOver(bool flag)
     {
         isGameOver = flag;
-        if (isGameOver == true) {
-        Debug.Log("Game Over");
-        deathScreenUI.SetActive(true);
-        // Time.timeScale = 0; i will avoid using timescale as animations won't work
-        // FindObjectOfType<Snake>().HideSnakeHead();
-        } else {
+        if (isGameOver == true)
+        {
+            Debug.Log("Game Over");
+            deathScreenUI.SetActive(true);
+            // Time.timeScale = 0; i will avoid using timescale as animations won't work
+            // FindObjectOfType<Snake>().HideSnakeHead();
+
+            Debug.Log("Score = " + score + " setting score to score system");
+            scoreSystem.SetScore(score);
+        }
+        else
+        {
             deathScreenUI.SetActive(false);
         }
     }
 
+    public enum Level
+    {
+        One = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4
+    }
     public void GameWon()
     {
-    //    FindObjectOfType<Snake>().HideSnakeHead();
-       winScreenUI.SetActive(true);
-       Debug.Log("Game Won");
+        //FindObjectOfType<Snake>().HideSnakeHead();
+        Debug.Log("Score = " + score + " setting score to score system");
+        scoreSystem.SetScore(score);
+        winScreenUI.SetActive(true);
+        Debug.Log("Game Won");
     }
 
-    [Tooltip("case 1 = level 1, case 2 = level 2, etc...")]
-    public void CheckScore()
+    public void CheckScore(int score)
     {
-         int scene = SceneManager.GetActiveScene().buildIndex;
-        //if the scene is scene 1, and the score is 10 then game won
-        
-        switch(scene){
-            case 1:
-            if (GetScore() == 10) GameWon();
-            // if (GetScore() == 2) SpawnObject();
-            break;
-            case 2:
-            if (GetScore() == 20) GameWon();
-            break;
-            case 3:
-            if (GetScore() == 30) GameWon();
-            break;
-            case 4:
-            if (GetScore() == 40) GameWon();
-            break;
+        Level currentLevel = (Level)SceneManager.GetActiveScene().buildIndex;
+        int targetScore = (int)currentLevel * LEVEL_SCORE_INCREMENT;
+        this.score = score;
+        Debug.Log("Target score = " + targetScore + " current score = " + score);
+        if (score >= targetScore)
+        {
+            GameWon();
         }
-    }
-
-    public int GetScore()
-    {
-        score = player.GetComponent<Snake>().GetScore();
-        return score;
     }
 
 }

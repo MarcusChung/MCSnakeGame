@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour, IEntity
     {
         if (playerKeyPressed)
         {
-            Debug.Log("Executing command");
+            // Debug.Log("Executing command");
             _commandProcessor.ExecuteCommand(new MoveCommand(this, direction, transform, transform.position, snake.segments.Count));
             playerKeyPressed = false;
         }
