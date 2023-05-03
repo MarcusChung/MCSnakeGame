@@ -5,16 +5,8 @@ using UnityEngine.UI;
 
 public class ToggleActive : MonoBehaviour
 {
-    
-    [SerializeField] private Button closeButton;
-    private void Start()
+    public void ToggleView()
     {
-        Button btn = closeButton.GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
-    }
-
-   private void TaskOnClick()
-    {
-        transform.parent.gameObject.SetActive(!transform.parent.gameObject.activeSelf);
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 }

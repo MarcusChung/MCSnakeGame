@@ -19,7 +19,7 @@ public class MoveCommand : Command
     }
     public override void Execute()
     {
-        Debug.Log("Executing command: Rotation = " + rotation.rotation);
+        // Debug.Log("Executing command: Rotation = " + rotation.rotation);
         // entity.transform.Translate(direction);
         prevDirection = entity.GetDirection();
         entity.SetDirection(direction);
@@ -37,7 +37,7 @@ public class MoveCommand : Command
         entity.transform.position = gridPos;
         entity.transform.rotation = rotation.rotation;
         entity.SetDirection(prevDirection);
-        Debug.Log("Snake segments: " + snakeSegments + " prevSnakeSegments: " + prevSnakeSegments);
+        // Debug.Log("Snake segments: " + snakeSegments + " prevSnakeSegments: " + prevSnakeSegments);
         if(snakeSegments > prevSnakeSegments)
         {
             // Debug.Log("Shrinking snake");

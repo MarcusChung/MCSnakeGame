@@ -33,6 +33,9 @@ public class PlayerMovement : MonoBehaviour, IEntity
 
     private void GetUserInput()
     {
+             
+        //prevent more than two key presses per frame
+        if (playerKeyPressed) return;
         //   prevent snake from going backwards
         if (direction == Vector2.up)
         {

@@ -24946,7 +24946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8991267099908967062, guid: 2d08ca57fc5f82f449f7fe35fd13b693, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8991267100055864927, guid: 2d08ca57fc5f82f449f7fe35fd13b693, type: 3}
       propertyPath: m_SizeDelta.x
