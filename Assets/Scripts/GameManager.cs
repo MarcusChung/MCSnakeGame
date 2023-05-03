@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject deathScreenUI;
     [SerializeField] private GameObject winScreenUI;
-    private const int LEVEL_SCORE_INCREMENT = 5;
+    private const int LEVEL_SCORE_INCREMENT = 1;
     private Level currentLevel;
     private int currentProfile;
 
@@ -47,14 +47,24 @@ public class GameManager : MonoBehaviour
         winScreenUI.SetActive(true);
         playerProfileSO.NumOfLevelsComplete++;
         playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
-        PlayerPrefs.SetInt("Profile: " + playerProfileSO.ToString(), playerProfileSO.NumOfLevelsComplete);
+        PlayerPrefs.SetInt("Profile: " + playerProfileSO.CurrentProfile, playerProfileSO.NumOfLevelsComplete);
         // Save the levels completed array
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
-            PlayerPrefs.SetInt("Profile: " + playerProfileSO.ToString() + ":Level" + (i + 1), playerProfileSO.LevelsComplete[i] ? 1 : 0);
+            //playerProfileSO.LevelsComplete[i] returns a boolean value. 1 = true, 0 = false
+            PlayerPrefs.SetInt("Profile: " + playerProfileSO.CurrentProfile + ":Level" + (i + 1), playerProfileSO.LevelsComplete[i] ? 1 : 0);
         }
         PlayerPrefs.Save();
         Debug.Log("Game Won " + playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1]);
+    }
+
+    private void ResetStats(){
+        playerProfileSO.NumOfLevelsComplete = 0;
+        PlayerPrefs.SetInt("Profile: " + playerProfileSO.CurrentProfile, playerProfileSO.NumOfLevelsComplete);
+        for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++){
+            playerProfileSO.LevelsComplete[i] = false;
+            PlayerPrefs.SetInt("Profile: " + playerProfileSO.CurrentProfile + ":Level" + (i + 1), 0);
+        }
     }
 
     public void CheckScore(int score)
@@ -74,16 +84,27 @@ public class GameManager : MonoBehaviour
     {
         currentProfile = profileNum;
         playerProfileSO.CurrentProfile = profileNum;
-        // playerProfileSO.NumOfLevelsComplete = PlayerPrefs.GetInt("Profile: " + playerProfileSO.ToString(), 0);
+        playerProfileSO.NumOfLevelsComplete = PlayerPrefs.GetInt("Profile: " + profileNum, 0);
+        for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
+        {
+            playerProfileSO.LevelsComplete[i] = PlayerPrefs.GetInt(
+                "Profile: " + profileNum + ":Level" + (i + 1), 0
+                ) == 1 ? true : false;
+        }
     }
 
     public string ProfileDetails(int profileNum)
     {
         string profileDetails = "Profile " + profileNum + "\n";
-        profileDetails += "Levels Complete: " + PlayerPrefs.GetInt("Profile: " + playerProfileSO.ToString(), 0) + "\n";
+        Debug.Log("playerProfileSO.ToString(): " + playerProfileSO.ToString());
+        profileDetails += "Levels Complete: " + PlayerPrefs.GetInt("Profile: " + profileNum, 0) + "\n";
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
-            profileDetails += "Level " + (i + 1) + ": " + (PlayerPrefs.GetInt("Profile: " + playerProfileSO.ToString() + ":Level" + (i + 1), 0) == 1 ? "Complete" : "Incomplete") + "\n";
+            //Profile 1
+            //Level 1: Complete
+            profileDetails += "Level " + (i + 1) + ": " + (PlayerPrefs.GetInt(
+                "Profile: " + profileNum + ":Level" + (i + 1), 0
+                ) == 1 ? "Complete" : "Incomplete") + "\n";
         }
         return profileDetails;
     }

@@ -35,19 +35,4 @@ public class PlayerProfileSelector : MonoBehaviour
             gameManager.SelectProfile(0);
         }
     }
-
-    public void Profile1Description(TextMeshProUGUI profileDescText)
-    {
-        profileDescText.text = gameManager.ProfileDetails(1);
-    }
-
-     public void Profile2Description(TextMeshProUGUI profileDescText)
-    {
-        profileDescText.text = gameManager.ProfileDetails(2);
-    }
-
-     public void Profile3Description(TextMeshProUGUI profileDescText)
-    {
-        profileDescText.text = gameManager.ProfileDetails(3);
-    }
 }
