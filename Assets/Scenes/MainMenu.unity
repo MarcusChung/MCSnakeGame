@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 159208397}
   - component: {fileID: 159208396}
   - component: {fileID: 159208395}
+  - component: {fileID: 159208398}
   m_Layer: 5
   m_Name: Profile2Button
   m_TagString: Untagged
@@ -232,18 +233,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1191145589}
-        m_TargetAssemblyTypeName: PlayerProfileSelector, Assembly-CSharp
-        m_MethodName: Profile2Description
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2038097546}
-          m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &159208396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +271,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159208391}
   m_CullTransparentMesh: 1
+--- !u!114 &159208398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159208391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8fb17d256896547a77f3f184551af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileDescText: {fileID: 2038097546}
+  profileNum: 2
 --- !u!1 &230546993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,6 +1196,7 @@ GameObject:
   - component: {fileID: 759918338}
   - component: {fileID: 759918337}
   - component: {fileID: 759918336}
+  - component: {fileID: 759918339}
   m_Layer: 5
   m_Name: Profile1Button
   m_TagString: Untagged
@@ -1266,18 +1270,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191145588}
-        m_TargetAssemblyTypeName: OpenPanel, Assembly-CSharp
-        m_MethodName: OpenSelectedPanel
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 230546993}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1191145589}
         m_TargetAssemblyTypeName: PlayerProfileSelector, Assembly-CSharp
         m_MethodName: CheckProfileSelected
@@ -1290,13 +1282,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1191145589}
-        m_TargetAssemblyTypeName: PlayerProfileSelector, Assembly-CSharp
-        m_MethodName: Profile1Description
+      - m_Target: {fileID: 1191145588}
+        m_TargetAssemblyTypeName: OpenPanel, Assembly-CSharp
+        m_MethodName: OpenSelectedPanel
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1950474938}
-          m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+          m_ObjectArgument: {fileID: 230546993}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1340,6 +1332,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759918333}
   m_CullTransparentMesh: 1
+--- !u!114 &759918339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759918333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8fb17d256896547a77f3f184551af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileDescText: {fileID: 1950474938}
+  profileNum: 1
 --- !u!1 &769933234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,6 +1495,7 @@ GameObject:
   - component: {fileID: 789023587}
   - component: {fileID: 789023586}
   - component: {fileID: 789023585}
+  - component: {fileID: 789023588}
   m_Layer: 5
   m_Name: Profile3Button
   m_TagString: Untagged
@@ -1586,18 +1593,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1191145589}
-        m_TargetAssemblyTypeName: PlayerProfileSelector, Assembly-CSharp
-        m_MethodName: Profile3Description
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1738085109}
-          m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &789023586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1636,6 +1631,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789023581}
   m_CullTransparentMesh: 1
+--- !u!114 &789023588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789023581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8fb17d256896547a77f3f184551af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileDescText: {fileID: 1738085109}
+  profileNum: 3
 --- !u!224 &815696994 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1500304381054945196, guid: 5c56a3c123fba104c80aaaba9cdc0f0d, type: 3}
@@ -2253,7 +2262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1191145584
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2520,8 +2529,6 @@ MonoBehaviour:
   playerProfileSO: {fileID: 11400000, guid: b7024b7dc20fcbf4ba63dee953670116, type: 2}
   deathScreenUI: {fileID: 1182002883}
   winScreenUI: {fileID: 0}
-  recentScoreText: {fileID: 0}
-  scoreText: {fileID: 0}
 --- !u!4 &1451552690
 Transform:
   m_ObjectHideFlags: 0

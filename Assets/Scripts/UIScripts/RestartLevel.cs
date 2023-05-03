@@ -5,7 +5,7 @@ public class RestartLevel : MonoBehaviour
 {
     //button trigger
     [SerializeField] private Button restartButton;
-    [SerializeField] private GameObject deathScreenUI;
+    [SerializeField] private GameObject screenUI;
     // Update is called once per frame
     private void Start()
     {
@@ -16,7 +16,7 @@ public class RestartLevel : MonoBehaviour
     private void TaskOnClick()
     {
         RestartGame();
-        deathScreenUI.SetActive(false);
+        screenUI.SetActive(false);
     }
 
     private void RestartGame()

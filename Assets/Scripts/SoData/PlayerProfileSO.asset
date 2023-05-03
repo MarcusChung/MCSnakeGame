@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24411f5453373e642ba142bdc18a6f4e, type: 3}
   m_Name: PlayerProfileSO
   m_EditorClassIdentifier: 
-  _NumOfLevelsComplete: 12
+  _NumOfLevelsComplete: 16
   _LevelsComplete: 0100000000
   _HighScore: 0
   _currentLevel: 0
