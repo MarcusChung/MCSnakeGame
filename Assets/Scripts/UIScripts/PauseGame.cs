@@ -9,7 +9,9 @@ public class PauseGame : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
+        //toggle pause menu on/off
         pauseMenu.SetActive(true);
+
     }
 
     public void Resume()
@@ -24,9 +26,25 @@ public class PauseGame : MonoBehaviour
         SceneManager.LoadScene(sceneId);
     }
 
-    public void Restart(){
+    public void Restart()
+    {
         Time.timeScale = 0.2f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (pauseMenu.activeSelf)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+
+    }
 }

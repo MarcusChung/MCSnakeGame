@@ -45085,7 +45085,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2831593961980020609}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45573,7 +45573,7 @@ PrefabInstance:
     - target: {fileID: 7799950427280415080, guid: a6b8ff85f71614e4ea939fb2f1f7750d, type: 3}
       propertyPath: recentScoreText
       value: 
-      objectReference: {fileID: 2831593961980020611}
+      objectReference: {fileID: 0}
     - target: {fileID: 7799950427280415081, guid: a6b8ff85f71614e4ea939fb2f1f7750d, type: 3}
       propertyPath: m_Name
       value: GameManager

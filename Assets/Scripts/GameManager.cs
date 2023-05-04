@@ -5,6 +5,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance;
     public bool isGameOver { get; private set; } = false;
     // public int score { get; private set; } = 0;
     // ScoreSystem scoreSystem;
@@ -110,7 +111,6 @@ public class GameManager : MonoBehaviour
     {
         int numOfLevelsComplete = 0;
         string profileDetails = "Total number of deaths: " + PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0) + "\n";
-        // profileDetails += "Levels Complete: " + PlayerPrefs.GetInt("Profile: " + profileNum, 0) + "\n";
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
             if (PlayerPrefs.GetInt("Profile: " + profileNum + ":Level" + (i + 1), 0) == 1)
@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
                 "Profile: " + profileNum + ":Level" + (i + 1), 0
                 ) == 1 ? "Complete" : "Incomplete") + "\n";
         }
-        profileDetails += "Levels Complete: " + numOfLevelsComplete + "\n";
+        profileDetails += "Levels Complete: " + numOfLevelsComplete + " / " + playerProfileSO.LevelsComplete.Length + "\n";
         profileDetails += "Total Fruit Ate: " + PlayerPrefs.GetInt("TotalFruitAte: " + profileNum, 0) + "\n";
         return profileDetails;
     }

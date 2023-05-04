@@ -24503,6 +24503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 2831593961980020611}
+  playerProfileSO: {fileID: 11400000, guid: b7024b7dc20fcbf4ba63dee953670116, type: 2}
 --- !u!1001 &3346363543101280003
 PrefabInstance:
   m_ObjectHideFlags: 0

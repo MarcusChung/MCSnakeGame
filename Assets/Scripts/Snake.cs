@@ -87,6 +87,7 @@ public class Snake : MonoBehaviour
     {
         score++;
         gameManager.IncrementTotalNumOfFruitAte();
+        gameManager.CheckScore(score);
     }
 
     public void DecrementScore()
@@ -95,6 +96,7 @@ public class Snake : MonoBehaviour
         {
             score--;
         }
+        gameManager.CheckScore(score);
     }
 
     private void FixedUpdate()
@@ -151,7 +153,7 @@ public class Snake : MonoBehaviour
             gameManager.GameOver(true);
             Debug.Log("Game Over ONCE AGAIN");
         }
-        gameManager.CheckScore(score);
+
     }
 
     public void HideSnakeHead()
