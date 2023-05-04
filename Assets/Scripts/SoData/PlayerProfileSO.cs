@@ -10,7 +10,7 @@ public class PlayerProfileSO : ScriptableObject
     [SerializeField] private int _HighScore;
     [SerializeField] private Level _currentLevel;
     [SerializeField] private int _currentProfile;
-    public int NumOfLevelsComplete
+    public int NumOfDeaths
     {
         get { return _NumOfLevelsComplete; }
         set { _NumOfLevelsComplete = value; }

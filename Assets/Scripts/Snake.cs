@@ -17,6 +17,7 @@ public class Snake : MonoBehaviour
 
     private const int SNAKE_BODY_LAYER = 10;
     private const int SNAKE_HEAD_LAYER = 11;
+    private int score = 0;
     private void Start()
     {
         freezeItem = FindObjectOfType<FreezeItem>();
@@ -82,21 +83,18 @@ public class Snake : MonoBehaviour
         Time.timeScale = unslowFactor;
     }
 
-
-    private int score = 0;
     public void IncrementScore()
     {
         score++;
-
-        gameManager.CheckScore(score);
+        gameManager.IncrementTotalNumOfFruitAte();
     }
 
-    public void decrementScore()
+    public void DecrementScore()
     {
-        if(score > 0){
-        score--;
+        if (score > 0)
+        {
+            score--;
         }
-        gameManager.CheckScore(score);
     }
 
     private void FixedUpdate()
@@ -121,6 +119,7 @@ public class Snake : MonoBehaviour
         {
             HideSnakeHead();
             gameManager.GameOver(true);
+            Debug.Log("Game Over ONCE AGAIN2");
         }
         else if (other.gameObject.layer == 7)
         {
@@ -134,7 +133,7 @@ public class Snake : MonoBehaviour
         else if (other.gameObject.layer == 8)
         {
             Shrink();
-            decrementScore();
+            DecrementScore();
             badFood.AccumulatePoison();
         }
         else if (other.gameObject.layer == 9)
@@ -150,8 +149,9 @@ public class Snake : MonoBehaviour
             }
             HideSnakeHead();
             gameManager.GameOver(true);
+            Debug.Log("Game Over ONCE AGAIN");
         }
-
+        gameManager.CheckScore(score);
     }
 
     public void HideSnakeHead()

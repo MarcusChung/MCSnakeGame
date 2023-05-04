@@ -13,4 +13,11 @@ public class ProfileDetails : MonoBehaviour
     {
         profileDescText.text = FindObjectOfType<GameManager>().ProfileDetails(profileNum);
     }
+
+    public void UpdateProfileDescText()
+    {
+        profileDescText.text = FindObjectOfType<GameManager>().ProfileDetails(profileNum);
+        Debug.Log("UpdateProfileDescText");
+        profileDescText.ForceMeshUpdate();
+    }
 }
