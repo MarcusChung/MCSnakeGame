@@ -10,13 +10,18 @@ public class Snake : MonoBehaviour
     [SerializeField] private GameObject snakeHead;
     private RandomScriptBehaviour randomFoodGenerator;
     private List<Vector2> segmentPositions = new List<Vector2>();
-    private GameManager gameManager;
+    // private GameManager gameManager;
     public int prevSnakeSegmentsCount;
     private FreezeItem freezeItem;
     private BadFood badFood;
-
+    private DeathScreen deathScreen;
+    private GameWonScreen gameWonScreen;
     private const int SNAKE_BODY_LAYER = 10;
     private const int SNAKE_HEAD_LAYER = 11;
+    private const int FOOD = 7;
+    private const int POISON_FOOD = 8;
+    private const int FREEZE_ITEM = 9;
+    private const int OBSTACLE = 6;
     private int score = 0;
     private void Start()
     {
@@ -24,8 +29,11 @@ public class Snake : MonoBehaviour
         badFood = FindObjectOfType<BadFood>();
         ResetSegments();
         segmentPositions.Add(transform.position);
-        gameManager = FindObjectOfType<GameManager>();
+        // gameManager = FindObjectOfType<GameManager>();
+
         TempImmunity();
+        deathScreen = FindObjectOfType<DeathScreen>();
+        gameWonScreen = FindObjectOfType<GameWonScreen>();
     }
 
     public void TempImmunity()
@@ -83,22 +91,6 @@ public class Snake : MonoBehaviour
         Time.timeScale = unslowFactor;
     }
 
-    public void IncrementScore()
-    {
-        score++;
-        gameManager.IncrementTotalNumOfFruitAte();
-        gameManager.CheckScore(score);
-    }
-
-    public void DecrementScore()
-    {
-        if (score > 0)
-        {
-            score--;
-        }
-        gameManager.CheckScore(score);
-    }
-
     private void FixedUpdate()
     {
         MoveSegments();
@@ -117,13 +109,16 @@ public class Snake : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         //collision checks
-        if (other.gameObject.layer == 6)
+        if (other.gameObject.layer == OBSTACLE)
         {
             HideSnakeHead();
-            gameManager.GameOver(true);
+            GameManager.Instance.GameOver(true);
+            GameManager.Instance.LastScore = score;
+            deathScreen.ShowScreen();
+            // gameManager.GameOver(true);
             Debug.Log("Game Over ONCE AGAIN2");
         }
-        else if (other.gameObject.layer == 7)
+        else if (other.gameObject.layer == FOOD)
         {
             Grow();
             segmentPositions.Add(segments[segments.Count - 2].transform.position); // add the old position of the last segment to the list
@@ -132,13 +127,13 @@ public class Snake : MonoBehaviour
             randomFoodGenerator.randomSprite();
             IncrementScore();
         }
-        else if (other.gameObject.layer == 8)
+        else if (other.gameObject.layer == POISON_FOOD)
         {
             Shrink();
             DecrementScore();
             badFood.AccumulatePoison();
         }
-        else if (other.gameObject.layer == 9)
+        else if (other.gameObject.layer == FREEZE_ITEM)
         {
             freezeItem.SlowSnake();
         }
@@ -150,7 +145,9 @@ public class Snake : MonoBehaviour
                 return;
             }
             HideSnakeHead();
-            gameManager.GameOver(true);
+            // gameManager.GameOver(true);
+            GameManager.Instance.GameOver(true);
+            deathScreen.ShowScreen();
             Debug.Log("Game Over ONCE AGAIN");
         }
 
@@ -161,4 +158,25 @@ public class Snake : MonoBehaviour
         snakeHead.SetActive(false);
     }
 
+    private void IncrementScore()
+    {
+        score++;
+        GameManager.Instance.IncrementTotalNumOfFruitAte();
+        if (GameManager.Instance.CheckScore(score))
+        {
+            gameWonScreen.ShowScreen();
+        }
+    }
+
+    private void DecrementScore()
+    {
+        if (score > 0)
+        {
+            score--;
+        }
+        if (GameManager.Instance.CheckScore(score))
+        {
+            gameWonScreen.ShowScreen();
+        }
+    }
 }

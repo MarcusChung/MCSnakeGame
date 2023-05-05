@@ -18,6 +18,7 @@ public class ShowPanel : MonoBehaviour
 
     private void TaskOnClick()
     {
+        Time.timeScale = 1f;
         selectPanel.SetActive(true);
     }
 }

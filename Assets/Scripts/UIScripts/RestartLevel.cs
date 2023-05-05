@@ -16,13 +16,12 @@ public class RestartLevel : MonoBehaviour
     private void TaskOnClick()
     {
         RestartGame();
-        // screenUI.SetActive(false);
     }
 
     private void RestartGame()
     {
         Debug.Log("Restarting Game");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        FindObjectOfType<GameManager>().GameOver(false);
+        GameManager.Instance.ResetScore();
     }
 }

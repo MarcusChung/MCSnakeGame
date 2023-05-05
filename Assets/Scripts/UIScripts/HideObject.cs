@@ -12,6 +12,7 @@ public class HideObject : MonoBehaviour
 
     private void Start()
     {
-        gObject.SetActive(false);
+        // gObject.SetActive(false);
+        GameManager.Instance.GameOver(true);
     }
 }

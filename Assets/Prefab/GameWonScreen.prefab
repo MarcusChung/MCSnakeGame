@@ -135,7 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restartButton: {fileID: 7902775895848434531}
-  screenUI: {fileID: 8991267099908967062}
 --- !u!1 &8991267099908967062
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.98589355, g: 0.990566, b: 0.9905162, a: 1}
+  m_Color: {r: 0.3882353, g: 0.58431375, b: 0.90588236, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

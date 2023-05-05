@@ -20773,6 +20773,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ea15ce036c2334c9f47c7b5e72f088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1796571954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555086062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57cf7e5d4d27f294cb50f7d35713c92a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameWonScreen: {fileID: 1838335219}
+--- !u!114 &1796571955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555086062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfc0fa643aa60a4b8d3f9e03aef6a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathScreen: {fileID: 1232734706}
 --- !u!1 &1838335219 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8991267099908967062, guid: 2d08ca57fc5f82f449f7fe35fd13b693, type: 3}

@@ -12,17 +12,54 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatSO scoreSO;
     [SerializeField] private PlayerProfileSO playerProfileSO;
 
-    [SerializeField] private GameObject deathScreenUI;
-    [SerializeField] private GameObject winScreenUI;
     private const int LEVEL_SCORE_INCREMENT = 2;
     private Level currentLevel;
     private int currentProfile;
+    //the last score the player got on that level
+    public float LastScore
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("Score" + playerProfileSO.CurrentProfile + " " + playerProfileSO.CurrentLevel, 0f);
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("Score" + playerProfileSO.CurrentProfile + " " + playerProfileSO.CurrentLevel, value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                Debug.LogError("GameManager is null");
+            }
+            return instance;
+        }
+    }
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
+        ResetScore();
+    }
+
+    public void ResetScore()
+    {
         scoreSO.Value = 0;
-        currentLevel = (Level)SceneManager.GetActiveScene().buildIndex;
-        playerProfileSO.CurrentLevel = (PlayerProfileSO.Level)currentLevel;
     }
     public void GameOver(bool flag)
     {
@@ -32,12 +69,10 @@ public class GameManager : MonoBehaviour
             playerProfileSO.NumOfDeaths++;
             PlayerPrefs.SetInt("ProfileDeaths:" + playerProfileSO.CurrentProfile, playerProfileSO.NumOfDeaths);
             PlayerPrefs.Save();
-            // Debug.Log("Game Over");
-            deathScreenUI.SetActive(true);
         }
         else
         {
-            deathScreenUI.SetActive(false);
+            // FindObjectOfType<DeathScreen>().HideDeathScreen();
         }
     }
     private enum Level
@@ -50,10 +85,9 @@ public class GameManager : MonoBehaviour
     public void GameWon()
     {
         FindObjectOfType<Snake>().HideSnakeHead();
-        winScreenUI.SetActive(true);
 
         playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
-       
+
         // Save the levels completed array
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
@@ -81,16 +115,24 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) + 1);
         PlayerPrefs.Save();
     }
-    public void CheckScore(int score)
+    public bool CheckScore(int score)
     {
-        int targetScore = (int)currentLevel * LEVEL_SCORE_INCREMENT;
-        scoreSO.Value = score;
-        PlayerPrefs.SetFloat("Score" + playerProfileSO.CurrentProfile + " " + playerProfileSO.CurrentLevel, scoreSO.Value);
-        PlayerPrefs.Save();
+        currentLevel = (Level)SceneManager.GetActiveScene().buildIndex;
+        playerProfileSO.CurrentLevel = (PlayerProfileSO.Level)currentLevel;
 
+        int targetScore = (int)currentLevel * LEVEL_SCORE_INCREMENT;
+        Debug.Log("Target Score: " + targetScore);
+        scoreSO.Value = score;
+        LastScore = score;
+        //if the score matches the target to win the level
         if (score >= targetScore)
         {
             GameWon();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

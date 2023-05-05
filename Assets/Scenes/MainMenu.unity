@@ -3368,11 +3368,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
---- !u!1 &1182002883 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3340121193646727194, guid: 891d16f6b083280428fb0e5f84aa417d, type: 3}
-  m_PrefabInstance: {fileID: 3340121192477675225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1182002884 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3340121193646727197, guid: 891d16f6b083280428fb0e5f84aa417d, type: 3}
@@ -3698,8 +3693,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreSO: {fileID: 11400000, guid: 26d43550dc5ff72418d19bf9be88348c, type: 2}
   playerProfileSO: {fileID: 11400000, guid: b7024b7dc20fcbf4ba63dee953670116, type: 2}
-  deathScreenUI: {fileID: 1182002883}
-  winScreenUI: {fileID: 0}
 --- !u!4 &1451552690
 Transform:
   m_ObjectHideFlags: 0

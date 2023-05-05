@@ -21,7 +21,8 @@ public class BadFood : Food
     {
         _poisonAccumulation++;
         if (_poisonAccumulation == 5) {
-            FindObjectOfType<GameManager>().GameOver(true);
+            GameManager.Instance.GameOver(true);
+            FindObjectOfType<DeathScreen>().ShowScreen();
         }
     }
 
