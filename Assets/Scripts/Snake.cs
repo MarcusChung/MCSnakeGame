@@ -23,6 +23,7 @@ public class Snake : MonoBehaviour
     private const int FREEZE_ITEM = 9;
     private const int OBSTACLE = 6;
     private int score = 0;
+    private int snakeHealth;
     private void Start()
     {
         freezeItem = FindObjectOfType<FreezeItem>();
@@ -32,6 +33,7 @@ public class Snake : MonoBehaviour
         // gameManager = FindObjectOfType<GameManager>();
 
         TempImmunity();
+        snakeHealth = 5;
         deathScreen = FindObjectOfType<DeathScreen>();
         gameWonScreen = FindObjectOfType<GameWonScreen>();
     }

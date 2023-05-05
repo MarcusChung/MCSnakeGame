@@ -12,9 +12,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatSO scoreSO;
     [SerializeField] private PlayerProfileSO playerProfileSO;
 
-    private const int LEVEL_SCORE_INCREMENT = 2;
+    private const int LEVEL_SCORE_INCREMENT = 1;
     private Level currentLevel;
     private int currentProfile;
+    private int EndlessModeLevel = 6;
+    private int numOfLevelsComplete = 0;
     //the last score the player got on that level
     public float LastScore
     {
@@ -82,22 +84,6 @@ public class GameManager : MonoBehaviour
         Three = 3,
         Four = 4
     }
-    public void GameWon()
-    {
-        FindObjectOfType<Snake>().HideSnakeHead();
-
-        playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
-
-        // Save the levels completed array
-        for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
-        {
-            //playerProfileSO.LevelsComplete[i] returns a boolean value. 1 = true, 0 = false
-            PlayerPrefs.SetInt("Profile: " + playerProfileSO.CurrentProfile + ":Level" + (i + 1), playerProfileSO.LevelsComplete[i] ? 1 : 0);
-        }
-        PlayerPrefs.Save();
-        Debug.Log("Game Won " + playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1]);
-    }
-
     public void ResetStats(int profileNum)
     {
         playerProfileSO.NumOfDeaths = 0;
@@ -121,11 +107,11 @@ public class GameManager : MonoBehaviour
         playerProfileSO.CurrentLevel = (PlayerProfileSO.Level)currentLevel;
 
         int targetScore = (int)currentLevel * LEVEL_SCORE_INCREMENT;
-        Debug.Log("Target Score: " + targetScore);
         scoreSO.Value = score;
         LastScore = score;
+        CheckAchievements();
         //if the score matches the target to win the level
-        if (score >= targetScore)
+        if (score >= targetScore && (int)currentLevel != EndlessModeLevel)
         {
             GameWon();
             return true;
@@ -134,6 +120,33 @@ public class GameManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void GameWon()
+    {
+        numOfLevelsComplete = 0;
+        FindObjectOfType<Snake>().HideSnakeHead();
+
+        playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
+
+        // Save the levels completed array
+        for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
+        {
+            PlayerPrefs.SetInt("Profile: " + playerProfileSO.CurrentProfile + ":Level" + (i + 1), playerProfileSO.LevelsComplete[i] ? 1 : 0);
+            
+            if (PlayerPrefs.GetInt("Profile: " + playerProfileSO.CurrentProfile + ":Level" + (i + 1), 0) == 1)
+            {
+                //increment number of levels completed
+                numOfLevelsComplete++;
+            }
+        }
+        PlayerPrefs.Save();
+        Debug.Log(playerProfileSO.LevelsComplete.Length);
+        if(PlayerPrefs.GetInt("ProfileDeaths:" + playerProfileSO.CurrentProfile, 0) == 0 && numOfLevelsComplete == playerProfileSO.LevelsComplete.Length){
+            ServiceLocator.AchievementSystem.UnlockAchievement("Flawless");
+        }
+
+        Debug.Log("Game Won " + playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1]);
     }
 
     public void SelectProfile(int profileNum)
@@ -151,15 +164,17 @@ public class GameManager : MonoBehaviour
 
     public string ProfileDetails(int profileNum)
     {
-        int numOfLevelsComplete = 0;
-        string profileDetails = "Total number of deaths: " + PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0) + "\n";
+        numOfLevelsComplete = 0;
+        int totalNumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
+        string profileDetails = "Total number of deaths: " + totalNumOfDeaths + "\n";
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
             if (PlayerPrefs.GetInt("Profile: " + profileNum + ":Level" + (i + 1), 0) == 1)
             {
+                //increment number of levels completed
                 numOfLevelsComplete++;
             }
-
+            //appends the level number and whether it is complete or not
             profileDetails += "Level " + (i + 1) + ": " + (PlayerPrefs.GetInt(
                 "Profile: " + profileNum + ":Level" + (i + 1), 0
                 ) == 1 ? "Complete" : "Incomplete") + "\n";
@@ -167,5 +182,14 @@ public class GameManager : MonoBehaviour
         profileDetails += "Levels Complete: " + numOfLevelsComplete + " / " + playerProfileSO.LevelsComplete.Length + "\n";
         profileDetails += "Total Fruit Ate: " + PlayerPrefs.GetInt("TotalFruitAte: " + profileNum, 0) + "\n";
         return profileDetails;
+    }
+
+    private void CheckAchievements(){
+        if(PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) >= 100){
+            ServiceLocator.AchievementSystem.UnlockAchievement("Glutton");
+        }
+        if(PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) >= 500){
+            ServiceLocator.AchievementSystem.UnlockAchievement("Ravenous");
+        }
     }
 }
