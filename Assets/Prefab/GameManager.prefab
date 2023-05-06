@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7799950427280415083}
   - component: {fileID: 7799950427280415080}
+  - component: {fileID: 3285235760239803809}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,7 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd57b727e663c6449a690e35f6dbb1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathScreenUI: {fileID: 0}
-  winScreenUI: {fileID: 0}
-  scoreText: {fileID: 0}
-  player: {fileID: 0}
+  scoreSO: {fileID: 0}
+  playerProfileSO: {fileID: 0}
+  currentProfile: 0
+--- !u!114 &3285235760239803809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7799950427280415081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9d8065e4f3cb1448645ceced4e4657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievementPanel: {fileID: 0}

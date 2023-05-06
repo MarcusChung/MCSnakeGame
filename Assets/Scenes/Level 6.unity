@@ -23027,7 +23027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 192.1, y: 209.8}
+  m_AnchoredPosition: {x: 192.1, y: 193.5}
   m_SizeDelta: {x: 204.676, y: 54.008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1249039354
@@ -26611,6 +26611,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3422269856328181602, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3841997803590467716, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
       propertyPath: m_margin.w
       value: -2.4013062
@@ -26711,8 +26715,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8284515645753392651, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
+--- !u!114 &1652133938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5409395212418029518, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
+  m_PrefabInstance: {fileID: 1652133937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df46af03b03f74e47a4d1ab4575ab1f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1796571946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7906173327019285834, guid: bffe2728cd61c1248a3181700420dfce, type: 3}
@@ -46324,6 +46343,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3285235760239803809, guid: a6b8ff85f71614e4ea939fb2f1f7750d, type: 3}
+      propertyPath: achievementPanel
+      value: 
+      objectReference: {fileID: 1652133938}
     - target: {fileID: 7799950427280415080, guid: a6b8ff85f71614e4ea939fb2f1f7750d, type: 3}
       propertyPath: player
       value: 
@@ -46356,6 +46379,10 @@ PrefabInstance:
       propertyPath: recentScoreText
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7799950427280415080, guid: a6b8ff85f71614e4ea939fb2f1f7750d, type: 3}
+      propertyPath: achievementPanel
+      value: 
+      objectReference: {fileID: 1652133938}
     - target: {fileID: 7799950427280415081, guid: a6b8ff85f71614e4ea939fb2f1f7750d, type: 3}
       propertyPath: m_Name
       value: GameManager

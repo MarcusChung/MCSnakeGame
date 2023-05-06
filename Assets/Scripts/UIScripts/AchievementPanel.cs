@@ -9,7 +9,6 @@ public class AchievementPanel: MonoBehaviour, IScreen
     public void ShowScreen()
     {
         achievementPanel.SetActive(true);
-        
     }
 
     public void HideScreen()

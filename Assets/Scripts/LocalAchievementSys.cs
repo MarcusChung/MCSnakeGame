@@ -14,7 +14,7 @@ public class LocalAchievementSys : IAchievement
         {
             unlockedAchievements[achievementName] = true;
             OnAchievementUnlocked?.Invoke(achievementName);
-            Debug.Log("Achievement unlocked: " + achievementName);
+            // Debug.Log("Achievement unlocked: " + achievementName);
         }
     }
 

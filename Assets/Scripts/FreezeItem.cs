@@ -23,11 +23,16 @@ public class FreezeItem : Food
 
     private IEnumerator ResetTimeScale()
     {
-    yield return new WaitForSeconds(slowDuration);
-    FindObjectOfType<Snake>().Unslow(0.2f);
+        yield return new WaitForSeconds(slowDuration);
+        // if not null then unslow
+        if (FindObjectOfType<Snake>() != null)
+        {
+            FindObjectOfType<Snake>().Unslow(0.2f);
+        }
+
     }
 
-    
+
 
 }
 
