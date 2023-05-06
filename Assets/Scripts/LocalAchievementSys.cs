@@ -1,35 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalAchievementSystem : IAchievement
+public class LocalAchievementSys : IAchievement
 {
+    private Dictionary<string, bool> unlockedAchievements = new Dictionary<string, bool>();
+    public event Action<string> OnAchievementUnlocked;
     public void UnlockAchievement(string achievementName)
     {
-        Debug.Log("Achievement unlocked: " + achievementName);
-        if (achievementName == "Achievement1")
+
+        if (!unlockedAchievements.ContainsKey(achievementName))
         {
-            Debug.Log("completed in first try");
-        }
-        if (achievementName == "Flawless")
-        {
-            Debug.Log("completed without dying");
-        }
-        if (achievementName == "Glutton")
-        {
-            Debug.Log("ate all the food");
-        }
-        if (achievementName == "Ravenous")
-        {
-            Debug.Log("endless appetite");
+            unlockedAchievements[achievementName] = true;
+            OnAchievementUnlocked?.Invoke(achievementName);
+            Debug.Log("Achievement unlocked: " + achievementName);
         }
     }
 
     public void IncrementAchievement(string achievementName, int steps)
     {
-        // Code to increment the specified achievement locally
         Debug.Log("Achievement unlocked: " + achievementName + " " + steps);
     }
 
-    
+    public bool HasAchievement(string achievementName)
+    {
+        if (unlockedAchievements.ContainsKey(achievementName))
+        {
+            return unlockedAchievements[achievementName];
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
