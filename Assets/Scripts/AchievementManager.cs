@@ -46,7 +46,7 @@ public class AchievementManager : MonoBehaviour
         if (GameManager.Instance != null && achievementPanel != null)
         {
             achievementPanel.ShowAchievement(achievementName);
-            GameManager.Instance.StartCoroutine(HideAchievementPanel());
+            // GameManager.Instance.StartCoroutine(HideAchievementPanel());
         }
     }
     private IEnumerator HideAchievementPanel()

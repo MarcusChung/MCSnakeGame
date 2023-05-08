@@ -9,7 +9,8 @@ public class MostRecentScore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scoreText.text = "Recent Score: " + GameManager.Instance.LastScore.ToString();
+        // scoreText.text = "Recent Score: " + GameManager.Instance.GetLastScore();
+        scoreText.text = "Recent Score: " + GameManager.Instance.LastScore;
     }
 
 }

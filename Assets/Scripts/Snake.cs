@@ -116,9 +116,9 @@ public class Snake : MonoBehaviour
             HideSnakeHead();
             GameManager.Instance.GameOver(true);
             GameManager.Instance.LastScore = score;
+            // GameManager.Instance.SetLastScore(score);
+            //IMPORTANT: this is where the score is saved when no object is eaten
             deathScreen.ShowScreen();
-            // gameManager.GameOver(true);
-            Debug.Log("Game Over ONCE AGAIN2");
         }
         else if (other.gameObject.layer == FOOD)
         {

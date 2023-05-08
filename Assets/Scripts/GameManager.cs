@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public int currentProfile;
     private int EndlessModeLevel = 6;
     private int numOfLevelsComplete = 0;
-    private int prevLevelScore;
+    public int prevLevelScore;
     // [SerializeField] private AchievementPanel achievementPanel;
     //the last score the player got on that level
     public float LastScore
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
+    private DataManager dataManager;
     public static GameManager Instance
     {
         get
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        dataManager = new DataManager();
+        // dataManager.Load();
         if (instance == null)
         {
             instance = this;
@@ -57,6 +60,9 @@ public class GameManager : MonoBehaviour
         }
         // ServiceLocator.AchievementSystem.OnAchievementUnlocked += OnAchievementUnlocked;
         prevLevelScore = (int)LastScore;
+        // prevLevelScore = dataManager.GetLastScore(playerProfileSO.CurrentProfile, SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("build index " + SceneManager.GetActiveScene().buildIndex);
+        dataManager.Load();
         ResetScore();
     }
 
@@ -70,8 +76,8 @@ public class GameManager : MonoBehaviour
         if (isGameOver == true)
         {
             playerProfileSO.NumOfDeaths++;
-            PlayerPrefs.SetInt("ProfileDeaths:" + playerProfileSO.CurrentProfile, playerProfileSO.NumOfDeaths);
-            PlayerPrefs.Save();
+            dataManager.SetNumOfDeaths(playerProfileSO.NumOfDeaths, playerProfileSO.CurrentProfile);
+            dataManager.Save();
         }
     }
     private enum Level
@@ -95,9 +101,10 @@ public class GameManager : MonoBehaviour
     }
     public void IncrementTotalNumOfFruitAte()
     {
-        PlayerPrefs.SetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) + 1);
-        PlayerPrefs.Save();
-        // ServiceLocator.AchievementSystem.UnlockAchievement("SNAKE");
+        // PlayerPrefs.SetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) + 1);
+        // PlayerPrefs.Save();
+        dataManager.SetNumOfFruitAte(dataManager.GetNumOfFruitAte(playerProfileSO.CurrentProfile) + 1, playerProfileSO.CurrentProfile);
+        dataManager.Save();
         AchievementManager.Instance.CheckFruitAteAchievement(playerProfileSO.CurrentProfile);
     }
     public bool CheckScore(int score)
@@ -108,6 +115,7 @@ public class GameManager : MonoBehaviour
         int targetScore = (int)currentLevel * LEVEL_SCORE_INCREMENT;
         scoreSO.Value = score;
         LastScore = score;
+        // SetLastScore(score, currentProfile, (int)currentLevel);
         AchievementManager.Instance.CheckScoreAchievement(score);
         AchievementManager.Instance.CheckDeJaVuAchievement(score, prevLevelScore);
         //if the score matches the target to win the level
@@ -121,6 +129,20 @@ public class GameManager : MonoBehaviour
             return false;
         }
     }
+
+    // public void SetLastScore(int score, int currentProfile, int currentLevel)
+    // {
+    //     dataManager.SetLastScore(score, currentProfile, currentLevel);
+    //     dataManager.Save();
+    // }
+    // public int GetLastScore()
+    // {
+    //     // Debug.Log("GetLastScore " + dataManager.GetLastScore(playerProfileSO.CurrentProfile, (int) SceneManager.GetActiveScene().buildIndex));
+    //     // Debug.Log("profile num" + playerProfileSO.CurrentProfile);
+    //     Debug.Log("current profile" + currentProfile);
+    //     return dataManager.GetLastScore(currentProfile, (int)SceneManager.GetActiveScene().buildIndex);
+    //     // SceneManager.GetActiveScene().buildIndex
+    // }
 
     public void GameWon()
     {
@@ -137,6 +159,7 @@ public class GameManager : MonoBehaviour
             numOfLevelsComplete = playerProfileSO.LevelsComplete.Count(l => l);
         }
         PlayerPrefs.Save();
+        dataManager.Save();
         // Debug.Log(playerProfileSO.LevelsComplete.Length);
         AchievementManager.Instance.CheckFlawlessAchievement(playerProfileSO.CurrentProfile, numOfLevelsComplete, playerProfileSO.LevelsComplete.Length);
         Debug.Log("Game Won " + playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1]);
@@ -146,7 +169,8 @@ public class GameManager : MonoBehaviour
     {
         currentProfile = profileNum;
         playerProfileSO.CurrentProfile = profileNum;
-        playerProfileSO.NumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
+        // playerProfileSO.NumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
+        playerProfileSO.NumOfDeaths = dataManager.GetGameData().totalDeaths[profileNum];
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
             playerProfileSO.LevelsComplete[i] = PlayerPrefs.GetInt(
@@ -158,7 +182,8 @@ public class GameManager : MonoBehaviour
     public string ProfileDetails(int profileNum)
     {
         numOfLevelsComplete = 0;
-        int totalNumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
+        // int totalNumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
+        int totalNumOfDeaths = dataManager.GetTotalDeaths(profileNum);
         string profileDetails = "Total number of deaths: " + totalNumOfDeaths + "\n";
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
@@ -173,45 +198,8 @@ public class GameManager : MonoBehaviour
                 ) == 1 ? "Complete" : "Incomplete") + "\n";
         }
         profileDetails += "Levels Complete: " + numOfLevelsComplete + " / " + playerProfileSO.LevelsComplete.Length + "\n";
-        profileDetails += "Total Fruit Ate: " + PlayerPrefs.GetInt("TotalFruitAte: " + profileNum, 0) + "\n";
+        // profileDetails += "Total Fruit Ate: " + PlayerPrefs.GetInt("TotalFruitAte: " + profileNum, 0) + "\n";
+        profileDetails += "Total Fruit Ate: " + dataManager.GetNumOfFruitAte(profileNum) + "\n";
         return profileDetails;
     }
-    // private void CheckFruitAteAchievement()
-    // {
-        
-    //     if (PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) >= 100 && !ServiceLocator.AchievementSystem.HasAchievement("Glutton"))
-    //     {
-    //         ServiceLocator.AchievementSystem.UnlockAchievement("Glutton");
-    //     }
-    //     else if (PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) >= 250)
-    //     {
-    //         ServiceLocator.AchievementSystem.UnlockAchievement("Hungry");
-    //     }
-    //     else if (PlayerPrefs.GetInt("TotalFruitAte: " + playerProfileSO.CurrentProfile, 0) >= 500)
-    //     {
-    //         ServiceLocator.AchievementSystem.UnlockAchievement("Ravenous");
-    //     }
-    // }
-
-    // private int ScoreAchievement(int score)
-    // {
-    //     if (score >= 2)
-    //     {
-    //         ServiceLocator.AchievementSystem.UnlockAchievement("YOU SCORED 2 POINTS");
-    //     }
-    //     return score;
-    // }
-    // private void OnAchievementUnlocked(string achievementName)
-    // {
-    //     if (GameManager.Instance != null && achievementPanel != null)
-    //     {
-    //         achievementPanel.ShowAchievement(achievementName);
-    //         GameManager.Instance.StartCoroutine(HideAchievementPanel());
-    //     }
-    // }
-    // private IEnumerator HideAchievementPanel()
-    // {
-    //     yield return new WaitForSecondsRealtime(5f);
-    //     achievementPanel.HideScreen();
-    // }
 }
