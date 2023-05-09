@@ -5,15 +5,15 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PlayerProfileSO : ScriptableObject
 {
-    [SerializeField] private int _NumOfLevelsComplete;
+    [SerializeField] private int _NumOfDeaths;
     [SerializeField] private bool[] _LevelsComplete;
     [SerializeField] private int _HighScore;
     [SerializeField] private Level _currentLevel;
     [SerializeField] private int _currentProfile;
     public int NumOfDeaths
     {
-        get { return _NumOfLevelsComplete; }
-        set { _NumOfLevelsComplete = value; }
+        get { return _NumOfDeaths; }
+        set { _NumOfDeaths = value; }
     }
 
     public bool[] LevelsComplete
@@ -52,7 +52,7 @@ public class PlayerProfileSO : ScriptableObject
     {
         _LevelsComplete = new bool[Enum.GetNames(typeof(Level)).Length];
         _currentProfile = 0;
-        _NumOfLevelsComplete = 0;
+        _NumOfDeaths = 0;
         _HighScore = 0;
     }
 }

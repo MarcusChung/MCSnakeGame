@@ -8,11 +8,12 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+    private DataManager dataManager;
     public bool isGameOver { get; private set; } = false;
     [SerializeField] private FloatSO scoreSO;
     [SerializeField] private PlayerProfileSO playerProfileSO;
 
-    private const int LEVEL_SCORE_INCREMENT = 3;
+    private const int LEVEL_SCORE_INCREMENT = 1;
     private Level currentLevel;
     public int currentProfile;
     private int EndlessModeLevel = 6;
@@ -32,7 +33,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
-    private DataManager dataManager;
     public static GameManager Instance
     {
         get
@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         dataManager = new DataManager();
-        // dataManager.Load();
         if (instance == null)
         {
             instance = this;
@@ -60,9 +59,10 @@ public class GameManager : MonoBehaviour
         }
         // ServiceLocator.AchievementSystem.OnAchievementUnlocked += OnAchievementUnlocked;
         prevLevelScore = (int)LastScore;
-        // prevLevelScore = dataManager.GetLastScore(playerProfileSO.CurrentProfile, SceneManager.GetActiveScene().buildIndex);
         Debug.Log("build index " + SceneManager.GetActiveScene().buildIndex);
         dataManager.Load();
+        // dataManager.ResetGameData();
+        // dataManager.Save();
         ResetScore();
     }
 
@@ -151,18 +151,21 @@ public class GameManager : MonoBehaviour
 
         playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
 
-        // Save the levels completed array
-        for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
+        bool[] levelsComplete = dataManager.GetLevelsComplete(playerProfileSO.CurrentProfile);
+        levelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
+        // dataManager.SetNumOfLevelsComplete(dataManager.GetNumOfLevelsComplete(playerProfileSO.CurrentProfile) + 1, playerProfileSO.CurrentProfile);
+        dataManager.SetLevelsComplete(levelsComplete, playerProfileSO.CurrentProfile);
+        dataManager.Save();
+
+         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
             PlayerPrefs.SetInt("Profile: " + playerProfileSO.CurrentProfile + ":Level" + (i + 1), playerProfileSO.LevelsComplete[i] ? 1 : 0);
             //counts the num of levels complete
             numOfLevelsComplete = playerProfileSO.LevelsComplete.Count(l => l);
         }
         PlayerPrefs.Save();
-        dataManager.Save();
-        // Debug.Log(playerProfileSO.LevelsComplete.Length);
+        
         AchievementManager.Instance.CheckFlawlessAchievement(playerProfileSO.CurrentProfile, numOfLevelsComplete, playerProfileSO.LevelsComplete.Length);
-        Debug.Log("Game Won " + playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1]);
     }
 
     public void SelectProfile(int profileNum)
@@ -179,27 +182,49 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // public string ProfileDetails(int profileNum)
+    // {
+    //     numOfLevelsComplete = 0;
+    //     // int totalNumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
+    //     int totalNumOfDeaths = dataManager.GetTotalDeaths(profileNum);
+    //     string profileDetails = "Total number of deaths: " + totalNumOfDeaths + "\n";
+
+    //     for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
+    //     {
+    //         if (dataManager.GetLevelsComplete(profileNum)[i])
+    //         {
+    //             numOfLevelsComplete++;
+    //         }
+    //         profileDetails += "Level " + (i + 1) + ": " + (dataManager.GetLevelsComplete(profileNum)[i] ? "Complete" : "Incomplete") + "\n";
+    //         // Debug.Log("Level " + (i + 1) + ": " + (dataManager.GetLevelsComplete(profileNum)[i] ? "Complete" : "Incomplete") + profileNum +"\n");
+    //     }
+
+    //     profileDetails += "Levels Complete: " + numOfLevelsComplete + " / " + playerProfileSO.LevelsComplete.Length + "\n";
+    //     // profileDetails += "Levels Complete: " + dataManager.GetNumOfLevelsComplete(profileNum) + " / " + playerProfileSO.LevelsComplete.Length + "\n";
+    //     profileDetails += "Total Fruit Ate: " + dataManager.GetNumOfFruitAte(profileNum) + "\n";
+    //     return profileDetails;
+    // }
+
     public string ProfileDetails(int profileNum)
     {
         numOfLevelsComplete = 0;
-        // int totalNumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
-        int totalNumOfDeaths = dataManager.GetTotalDeaths(profileNum);
+        int totalNumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
         string profileDetails = "Total number of deaths: " + totalNumOfDeaths + "\n";
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
             if (PlayerPrefs.GetInt("Profile: " + profileNum + ":Level" + (i + 1), 0) == 1)
             {
-                //increment number of levels completed
                 numOfLevelsComplete++;
             }
-            //appends the level number and whether it is complete or not
-            profileDetails += "Level " + (i + 1) + ": " + (PlayerPrefs.GetInt(
-                "Profile: " + profileNum + ":Level" + (i + 1), 0
-                ) == 1 ? "Complete" : "Incomplete") + "\n";
+            profileDetails += "Level " + (i + 1) + ": " + (PlayerPrefs.GetInt("Profile: " + profileNum + ":Level" + (i + 1), 0) == 1 ? "Complete" : "Incomplete") + "\n";
         }
         profileDetails += "Levels Complete: " + numOfLevelsComplete + " / " + playerProfileSO.LevelsComplete.Length + "\n";
-        // profileDetails += "Total Fruit Ate: " + PlayerPrefs.GetInt("TotalFruitAte: " + profileNum, 0) + "\n";
         profileDetails += "Total Fruit Ate: " + dataManager.GetNumOfFruitAte(profileNum) + "\n";
         return profileDetails;
+    }
+
+    private void OnApplicationQuit()
+    {
+        dataManager.Save();
     }
 }
