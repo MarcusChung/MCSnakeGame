@@ -5,7 +5,7 @@ using System.Collections;
 using System;
 using System.Linq;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IDataPersistence
 {
     private static GameManager instance;
     private DataManager dataManager;
@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatSO scoreSO;
     [SerializeField] private PlayerProfileSO playerProfileSO;
 
-    private const int LEVEL_SCORE_INCREMENT = 1;
+    private const int LEVEL_SCORE_INCREMENT = 2;
     private Level currentLevel;
     public int currentProfile;
     private int EndlessModeLevel = 6;
@@ -89,9 +89,11 @@ public class GameManager : MonoBehaviour
     }
     public void ResetStats(int profileNum)
     {
-        playerProfileSO.NumOfDeaths = 0;
-        PlayerPrefs.SetInt("ProfileDeaths:" + profileNum, playerProfileSO.NumOfDeaths);
-        PlayerPrefs.SetInt("TotalFruitAte: " + profileNum, 0);
+        // playerProfileSO.NumOfDeaths = 0;
+        // PlayerPrefs.SetInt("ProfileDeaths:" + profileNum, playerProfileSO.NumOfDeaths);
+        // PlayerPrefs.SetInt("TotalFruitAte: " + profileNum, 0);
+        dataManager.ResetSpecificProfileData(profileNum);
+        dataManager.Save();
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
             playerProfileSO.LevelsComplete[i] = false;
@@ -130,32 +132,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // public void SetLastScore(int score, int currentProfile, int currentLevel)
-    // {
-    //     dataManager.SetLastScore(score, currentProfile, currentLevel);
-    //     dataManager.Save();
-    // }
-    // public int GetLastScore()
-    // {
-    //     // Debug.Log("GetLastScore " + dataManager.GetLastScore(playerProfileSO.CurrentProfile, (int) SceneManager.GetActiveScene().buildIndex));
-    //     // Debug.Log("profile num" + playerProfileSO.CurrentProfile);
-    //     Debug.Log("current profile" + currentProfile);
-    //     return dataManager.GetLastScore(currentProfile, (int)SceneManager.GetActiveScene().buildIndex);
-    //     // SceneManager.GetActiveScene().buildIndex
-    // }
-
     public void GameWon()
     {
         numOfLevelsComplete = 0;
         FindObjectOfType<Snake>().HideSnakeHead();
 
         playerProfileSO.LevelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
-
-        bool[] levelsComplete = dataManager.GetLevelsComplete(playerProfileSO.CurrentProfile);
-        levelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
-        // dataManager.SetNumOfLevelsComplete(dataManager.GetNumOfLevelsComplete(playerProfileSO.CurrentProfile) + 1, playerProfileSO.CurrentProfile);
-        dataManager.SetLevelsComplete(levelsComplete, playerProfileSO.CurrentProfile);
-        dataManager.Save();
 
          for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
@@ -166,6 +148,12 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
         
         AchievementManager.Instance.CheckFlawlessAchievement(playerProfileSO.CurrentProfile, numOfLevelsComplete, playerProfileSO.LevelsComplete.Length);
+
+        // bool[] levelsComplete = dataManager.GetLevelsComplete(playerProfileSO.CurrentProfile);
+        // levelsComplete[(int)playerProfileSO.CurrentLevel - 1] = true;
+        // dataManager.SetNumOfLevelsComplete(dataManager.GetNumOfLevelsComplete(playerProfileSO.CurrentProfile) + 1, playerProfileSO.CurrentProfile);
+        // dataManager.SetLevelsComplete(levelsComplete, playerProfileSO.CurrentProfile);
+        // dataManager.Save();
     }
 
     public void SelectProfile(int profileNum)
@@ -208,7 +196,7 @@ public class GameManager : MonoBehaviour
     public string ProfileDetails(int profileNum)
     {
         numOfLevelsComplete = 0;
-        int totalNumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
+        int totalNumOfDeaths = dataManager.GetTotalDeaths(profileNum);
         string profileDetails = "Total number of deaths: " + totalNumOfDeaths + "\n";
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
@@ -223,8 +211,13 @@ public class GameManager : MonoBehaviour
         return profileDetails;
     }
 
-    private void OnApplicationQuit()
+    public void LoadData(Data data)
     {
-        dataManager.Save();
+        playerProfileSO.NumOfDeaths = data.deathCount;
+    }
+
+    public void SaveData(ref Data data)
+    {
+        data.deathCount = playerProfileSO.NumOfDeaths;
     }
 }

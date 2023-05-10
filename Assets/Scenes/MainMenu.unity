@@ -280,50 +280,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3010008826934341512, guid: 87a1e44bbcb0e8043b0c7df1912d3228, type: 3}
   m_PrefabInstance: {fileID: 3010008827641602249}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1145336882
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1145336884}
-  - component: {fileID: 1145336883}
-  m_Layer: 0
-  m_Name: JSONsave
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1145336883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1145336882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 370bec1f28b79204094218d445a23c4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1145336884
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1145336882}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 999.96375, y: 346.25424, z: 5.0035944}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1182002884 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3340121193646727197, guid: 891d16f6b083280428fb0e5f84aa417d, type: 3}
@@ -449,6 +405,7 @@ GameObject:
   - component: {fileID: 1451552690}
   - component: {fileID: 1451552689}
   - component: {fileID: 1451552691}
+  - component: {fileID: 1451552692}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -500,6 +457,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievementPanel: {fileID: 1789341215}
+--- !u!114 &1451552692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451552688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8655155e443c5469ab84623bbbd0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data.game
 --- !u!1 &1505419942
 GameObject:
   m_ObjectHideFlags: 0

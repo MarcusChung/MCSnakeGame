@@ -7,6 +7,7 @@ public class AchievementManager : MonoBehaviour
     [SerializeField] private AchievementPanel achievementPanel;
     private static AchievementManager instance;
     private int currentProfile;
+    private DataManager dataManager;
     public static AchievementManager Instance
     {
         get
@@ -20,6 +21,8 @@ public class AchievementManager : MonoBehaviour
     }
     private void Awake()
     {
+        dataManager = new DataManager();
+        dataManager.Load();
         if (instance == null)
         {
             instance = this;
@@ -57,19 +60,19 @@ public class AchievementManager : MonoBehaviour
 
     public void CheckFruitAteAchievement(int currentProfile)
     {
-        if (PlayerPrefs.GetInt("TotalFruitAte: " + currentProfile, 0) >= 5 && !ServiceLocator.AchievementSystem.HasAchievement("Novice_eater"))
+        if (dataManager.GetNumOfFruitAte(currentProfile) >= 5)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement("Novice_eater");
+            ServiceLocator.AchievementSystem.UnlockAchievement("Beginner");
         }
-        else if (PlayerPrefs.GetInt("TotalFruitAte: " + currentProfile, 0) >= 100 && !ServiceLocator.AchievementSystem.HasAchievement("Glutton"))
+        else if (dataManager.GetNumOfFruitAte(currentProfile) >= 100 )
         {
             ServiceLocator.AchievementSystem.UnlockAchievement("Glutton");
         }
-        else if (PlayerPrefs.GetInt("TotalFruitAte: " + currentProfile, 0) >= 250)
+        else if (dataManager.GetNumOfFruitAte(currentProfile) >= 250)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement("Hungry");
         }
-        else if (PlayerPrefs.GetInt("TotalFruitAte: " + currentProfile, 0) >= 500)
+        else if (dataManager.GetNumOfFruitAte(currentProfile) >= 500)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement("Ravenous");
         }
@@ -77,7 +80,12 @@ public class AchievementManager : MonoBehaviour
     
     public void CheckFlawlessAchievement(int currentProfile, int numOfLevelsComplete, int numOfLevels){
         //checks if the player has completed all levels without dying
-        if (PlayerPrefs.GetInt("ProfileDeaths:" + currentProfile, 0) == 0 && numOfLevelsComplete == numOfLevels)
+        // if (PlayerPrefs.GetInt("ProfileDeaths:" + currentProfile, 0) == 0 && numOfLevelsComplete == numOfLevels)
+        // {
+        //     ServiceLocator.AchievementSystem.UnlockAchievement("Flawless");
+        // }
+
+        if (dataManager.GetTotalDeaths(currentProfile) == 0 && numOfLevelsComplete == 1)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement("Flawless");
         }
