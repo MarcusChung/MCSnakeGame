@@ -5,13 +5,15 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PlayerProfileSO : ScriptableObject
 {
-    [SerializeField] private int _NumOfDeaths;
-    [SerializeField] private bool[] _LevelsComplete;
-    [SerializeField] private string _HighScore;
+    [SerializeField] private int _numOfDeaths;
+    [SerializeField] private bool[] _levelsComplete;
+    [SerializeField] private string _highScore;
     [SerializeField] private Level _currentLevel;
     [SerializeField] private int _currentProfile;
     [SerializeField] private int _fruitAte;
     [SerializeField] private string[] _unlockedAchievements = new string[MAX_ACHIEVEMENTS];
+
+    [SerializeField] private int _hP; 
     private const int MAX_ACHIEVEMENTS = 100;
 
     public string[] UnlockedAchievements
@@ -21,20 +23,20 @@ public class PlayerProfileSO : ScriptableObject
     }
     public int NumOfDeaths
     {
-        get { return _NumOfDeaths; }
-        set { _NumOfDeaths = value; }
+        get { return _numOfDeaths; }
+        set { _numOfDeaths = value; }
     }
 
     public bool[] LevelsComplete
     {
-        get { return _LevelsComplete; }
-        set { _LevelsComplete = value; }
+        get { return _levelsComplete; }
+        set { _levelsComplete = value; }
     }
 
     public string HighScore
     {
-        get { return _HighScore; }
-        set { _HighScore = value; }
+        get { return _highScore; }
+        set { _highScore = value; }
     }
 
     public int CurrentProfile {
@@ -46,6 +48,12 @@ public class PlayerProfileSO : ScriptableObject
     {
         get { return _fruitAte; }
         set { _fruitAte = value; }
+    }
+
+    public int HP
+    {
+        get { return _hP; }
+        set { _hP = value; }
     }
 
     public enum Level
@@ -65,11 +73,13 @@ public class PlayerProfileSO : ScriptableObject
 
     private void Awake()
     {
-        _LevelsComplete = new bool[Enum.GetNames(typeof(Level)).Length];
+        _levelsComplete = new bool[Enum.GetNames(typeof(Level)).Length];
         _currentProfile = 0;
-        _NumOfDeaths = 0;
-        _HighScore = "0";
+        _numOfDeaths = 0;
+        _highScore = "0";
         _fruitAte = 0;
+        _hP = 5;
         _unlockedAchievements = new string[MAX_ACHIEVEMENTS];
+        
     }
 }

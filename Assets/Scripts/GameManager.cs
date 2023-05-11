@@ -84,9 +84,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         int targetScore = (int)currentLevel * LEVEL_SCORE_INCREMENT;
         scoreSO.Value = score;
         LastScore = score;
-        // SetLastScore(score, currentProfile, (int)currentLevel);
         AchievementManager.Instance.CheckFruitAteAchievement(playerProfileSO.FruitAte);
-        AchievementManager.Instance.CheckScoreAchievement(score);
         AchievementManager.Instance.CheckDeJaVuAchievement(score, prevLevelScore);
         //if the score matches the target to win the level
         if (score >= targetScore && (int)currentLevel != EndlessModeLevel)
@@ -114,12 +112,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
             numOfLevelsComplete = playerProfileSO.LevelsComplete.Count(l => l);
         }
         PlayerPrefs.Save();
-        AchievementManager.Instance.CheckGameWonAchievements(playerProfileSO.NumOfDeaths, numOfLevelsComplete);
+        AchievementManager.Instance.NoDamageTakenAchievement(playerProfileSO.HP, (int)playerProfileSO.CurrentLevel);
+        AchievementManager.Instance.CheckFlawlessAchievement(playerProfileSO.NumOfDeaths, numOfLevelsComplete);
     }
 
     public void GameOver(bool flag)
     {
-        // FindObjectOfType<DataPersistenceManager>().SaveGame();
         isGameOver = flag;
         if (isGameOver == true)
         {

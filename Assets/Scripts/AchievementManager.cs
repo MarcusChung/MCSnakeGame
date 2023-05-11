@@ -74,28 +74,46 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
-    public void CheckGameWonAchievements(int totalDeaths, int numOfLevelsComplete)
+    public void CheckFlawlessAchievement(int totalDeaths, int numOfLevelsComplete)
     {
-        //checks if the player has completed all levels without dying
-        // if (PlayerPrefs.GetInt("ProfileDeaths:" + currentProfile, 0) == 0 && numOfLevelsComplete == numOfLevels)
-        // {
-        //     ServiceLocator.AchievementSystem.UnlockAchievement("Flawless");
-        // }
-
         if (totalDeaths == 0 && numOfLevelsComplete == GameManager.Instance.playerProfileSO.LevelsComplete.Length)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement(10, "Flawless");
         }
     }
 
-    public int CheckScoreAchievement(int score)
+    public void NoDamageTakenAchievement(int hP, int level)
+    {
+        string achievementName = "No Damage Taken on level " + level;
+        if (hP == 5 && level == 1)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(11,  achievementName + level);
+        }
+        else if (hP == 5 && level == 2)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(12, achievementName + level);
+        }
+        else if (hP == 5 && level == 3)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(13, achievementName + level);
+        }
+        else if (hP == 5 && level == 4)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(14, achievementName + level);
+        }
+        else if (hP == 5 && level == 5)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(15, achievementName + level);
+        }
+    }
+
+    public void CheckScoreAchievement(int score)
     {
         if (score >= 2)
         {
             // Debug.Log("score achievement: " + score);
             ServiceLocator.AchievementSystem.UnlockAchievement(6, "YOU SCORED 2 POINTS");
         }
-        return score;
     }
     public void CheckDeJaVuAchievement(int score, int lastGameScore)
     {

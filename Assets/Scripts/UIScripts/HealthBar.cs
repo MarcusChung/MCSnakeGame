@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class HealthBar : MonoBehaviour
 {
-    // Start is called before the first frame update
+     private TextMeshProUGUI hPText;
+     [SerializeField] private PlayerProfileSO playerProfile;
+     public int hP{get; private set;}
     void Start()
     {
-        
+       hPText = GetComponent<TextMeshProUGUI>();
+       hP = 5;
+       playerProfile.HP = hP;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealth(int health)
     {
-        
+        hPText.text = "HP: " + health.ToString() + "/5";
+    }
+
+    public void MinusHealth()
+    {
+        hP--;
+        playerProfile.HP = hP;
+        hPText.text = "HP: " + hP + "/5";
     }
 }
