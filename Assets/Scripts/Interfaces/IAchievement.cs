@@ -5,8 +5,8 @@ using UnityEngine;
 
 public interface IAchievement
 {
-    void UnlockAchievement(string achievementName);
+    void UnlockAchievement(int achievementNum, string achievementName);
     // void IncrementAchievement(string achievementName, int steps);
     event Action<string> OnAchievementUnlocked;
-    bool HasAchievement(string achievementName);
+    bool HasAchievement(int achievementNum);
 }

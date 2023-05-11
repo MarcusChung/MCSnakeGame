@@ -11,6 +11,14 @@ public class PlayerProfileSO : ScriptableObject
     [SerializeField] private Level _currentLevel;
     [SerializeField] private int _currentProfile;
     [SerializeField] private int _fruitAte;
+    [SerializeField] private string[] _unlockedAchievements = new string[MAX_ACHIEVEMENTS];
+    private const int MAX_ACHIEVEMENTS = 100;
+
+    public string[] UnlockedAchievements
+    {
+        get { return _unlockedAchievements; }
+        set { _unlockedAchievements = value; }
+    }
     public int NumOfDeaths
     {
         get { return _NumOfDeaths; }
@@ -62,5 +70,6 @@ public class PlayerProfileSO : ScriptableObject
         _NumOfDeaths = 0;
         _HighScore = "0";
         _fruitAte = 0;
+        _unlockedAchievements = new string[MAX_ACHIEVEMENTS];
     }
 }

@@ -7,7 +7,6 @@ public class AchievementManager : MonoBehaviour
     [SerializeField] private AchievementPanel achievementPanel;
     private static AchievementManager instance;
     private int currentProfile;
-    private DataManager dataManager;
     public static AchievementManager Instance
     {
         get
@@ -21,8 +20,6 @@ public class AchievementManager : MonoBehaviour
     }
     private void Awake()
     {
-        dataManager = new DataManager();
-        dataManager.Load();
         if (instance == null)
         {
             instance = this;
@@ -32,15 +29,8 @@ public class AchievementManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        // FindObjectOfType<DataPersistenceManager>().LoadGame(GameManager.Instance.currentProfile.ToString());
         ServiceLocator.AchievementSystem.OnAchievementUnlocked += OnAchievementUnlocked;
-    }
-
-    private void Update()
-    {
-        // if (GameManager.Instance.currentProfile != 0)
-        // {
-        //     currentProfile = GameManager.Instance.currentProfile;
-        // }
     }
 
 
@@ -49,7 +39,7 @@ public class AchievementManager : MonoBehaviour
         if (GameManager.Instance != null && achievementPanel != null)
         {
             achievementPanel.ShowAchievement(achievementName);
-            // GameManager.Instance.StartCoroutine(HideAchievementPanel());
+            GameManager.Instance.StartCoroutine(HideAchievementPanel());
         }
     }
     private IEnumerator HideAchievementPanel()
@@ -58,36 +48,43 @@ public class AchievementManager : MonoBehaviour
         achievementPanel.HideScreen();
     }
 
-    public void CheckFruitAteAchievement(int currentProfile)
+    public void CheckFruitAteAchievement(int totalFruitAte)
     {
-        if (dataManager.GetNumOfFruitAte(currentProfile) >= 5)
+        Debug.Log("total fruit ate check: " + totalFruitAte);
+        switch (totalFruitAte)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement("Beginner");
-        }
-        else if (dataManager.GetNumOfFruitAte(currentProfile) >= 100 )
-        {
-            ServiceLocator.AchievementSystem.UnlockAchievement("Glutton");
-        }
-        else if (dataManager.GetNumOfFruitAte(currentProfile) >= 250)
-        {
-            ServiceLocator.AchievementSystem.UnlockAchievement("Hungry");
-        }
-        else if (dataManager.GetNumOfFruitAte(currentProfile) >= 500)
-        {
-            ServiceLocator.AchievementSystem.UnlockAchievement("Ravenous");
+            case int n when n >= 5:
+                ServiceLocator.AchievementSystem.UnlockAchievement(1, "Beginner");
+                break;
+            case int n when n >= 15:
+                ServiceLocator.AchievementSystem.UnlockAchievement(2, "Amateur");
+                break;
+            case int n when n >= 30:
+                ServiceLocator.AchievementSystem.UnlockAchievement(3, "Satiated");
+                break;
+            case int n when n >= 100:
+                ServiceLocator.AchievementSystem.UnlockAchievement(4, "Hungry");
+                break;
+            case int n when n >= 250:
+                ServiceLocator.AchievementSystem.UnlockAchievement(5, "Glutton");
+                break;
+            case int n when n >= 500:
+                ServiceLocator.AchievementSystem.UnlockAchievement(6, "Ravenous");
+                break;
         }
     }
-    
-    public void CheckFlawlessAchievement(int currentProfile, int numOfLevelsComplete, int numOfLevels){
+
+    public void CheckGameWonAchievements(int totalDeaths, int numOfLevelsComplete)
+    {
         //checks if the player has completed all levels without dying
         // if (PlayerPrefs.GetInt("ProfileDeaths:" + currentProfile, 0) == 0 && numOfLevelsComplete == numOfLevels)
         // {
         //     ServiceLocator.AchievementSystem.UnlockAchievement("Flawless");
         // }
 
-        if (dataManager.GetTotalDeaths(currentProfile) == 0 && numOfLevelsComplete == 1)
+        if (totalDeaths == 0 && numOfLevelsComplete == GameManager.Instance.playerProfileSO.LevelsComplete.Length)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement("Flawless");
+            ServiceLocator.AchievementSystem.UnlockAchievement(10, "Flawless");
         }
     }
 
@@ -95,7 +92,8 @@ public class AchievementManager : MonoBehaviour
     {
         if (score >= 2)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement("YOU SCORED 2 POINTS");
+            // Debug.Log("score achievement: " + score);
+            ServiceLocator.AchievementSystem.UnlockAchievement(6, "YOU SCORED 2 POINTS");
         }
         return score;
     }
@@ -103,7 +101,7 @@ public class AchievementManager : MonoBehaviour
     {
         if (score == lastGameScore)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement("Deja Vu");
+            ServiceLocator.AchievementSystem.UnlockAchievement(7, "Deja Vu");
         }
     }
 }

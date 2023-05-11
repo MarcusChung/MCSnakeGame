@@ -17,10 +17,8 @@ public class ResetProgressDropdown : MonoBehaviour
     {
         Debug.Log("ConfirmReset");
         int val = dropdown.value;
-        // FindObjectOfType<GameManager>().ResetStats(val);#
-        Debug.Log("Resetting stats for profile " + GameManager.Instance.profilePrefix + val);
-        FindObjectOfType<DataPersistenceManager>().DeleteSave(GameManager.Instance.profilePrefix + val);
+        Debug.Log("Resetting stats for profile " + val);
+        FindObjectOfType<DataPersistenceManager>().DeleteSave(val.ToString());
         FindObjectOfType<ProfileDetails>().UpdateProfileDescText();
-        // confirmResetPanel.SetActive(false);
     }
 }

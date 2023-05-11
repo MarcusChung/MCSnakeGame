@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private static GameManager instance;
     public bool isGameOver { get; private set; } = false;
     [SerializeField] private FloatSO scoreSO;
-    [SerializeField] private PlayerProfileSO playerProfileSO;
+    [SerializeField] public PlayerProfileSO playerProfileSO;
 
     private const int LEVEL_SCORE_INCREMENT = 2;
     private Level currentLevel;
@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private int EndlessModeLevel = 6;
     private int numOfLevelsComplete = 0;
     public int prevLevelScore;
-    public string profilePrefix {get; private set;} = "data.profile.";
     // [SerializeField] private AchievementPanel achievementPanel;
     //the last score the player got on that level
     public float LastScore
@@ -86,6 +85,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         scoreSO.Value = score;
         LastScore = score;
         // SetLastScore(score, currentProfile, (int)currentLevel);
+        AchievementManager.Instance.CheckFruitAteAchievement(playerProfileSO.FruitAte);
         AchievementManager.Instance.CheckScoreAchievement(score);
         AchievementManager.Instance.CheckDeJaVuAchievement(score, prevLevelScore);
         //if the score matches the target to win the level
@@ -114,8 +114,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             numOfLevelsComplete = playerProfileSO.LevelsComplete.Count(l => l);
         }
         PlayerPrefs.Save();
-        // FindObjectOfType<DataPersistenceManager>().SaveGame();
-        AchievementManager.Instance.CheckFlawlessAchievement(playerProfileSO.CurrentProfile, numOfLevelsComplete, playerProfileSO.LevelsComplete.Length);
+        AchievementManager.Instance.CheckGameWonAchievements(playerProfileSO.NumOfDeaths, numOfLevelsComplete);
     }
 
     public void GameOver(bool flag)
@@ -132,20 +131,18 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         currentProfile = profileNum;
         playerProfileSO.CurrentProfile = profileNum;
-        // playerProfileSO.NumOfDeaths = PlayerPrefs.GetInt("ProfileDeaths:" + profileNum, 0);
-        // playerProfileSO.NumOfDeaths = dataManager.GetGameData().totalDeaths[profileNum];
         for (int i = 0; i < playerProfileSO.LevelsComplete.Length; i++)
         {
             playerProfileSO.LevelsComplete[i] = PlayerPrefs.GetInt(
                 "Profile: " + profileNum + ":Level" + (i + 1), 0
                 ) == 1 ? true : false;
         }
-        FindObjectOfType<DataPersistenceManager>().LoadGame(profilePrefix + profileNum.ToString());
+        FindObjectOfType<DataPersistenceManager>().LoadGame(profileNum.ToString());
     }
 
     public string ProfileDetails(int profileNum)
     {
-        FindObjectOfType<DataPersistenceManager>().LoadGame(profilePrefix + profileNum.ToString());
+        FindObjectOfType<DataPersistenceManager>().LoadGame(profileNum.ToString());
         numOfLevelsComplete = 0;
         int totalNumOfDeaths = playerProfileSO.NumOfDeaths;
         string profileDetails = "Total number of deaths: " + totalNumOfDeaths + "\n";
@@ -168,6 +165,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         playerProfileSO.FruitAte = data.fruitAte;
         playerProfileSO.LevelsComplete = data.levelsCompleted;
         playerProfileSO.HighScore = data.highScore;
+        playerProfileSO.UnlockedAchievements = data.unlockedAchievements;
     }
 
     public void SaveData(ref Data data)
@@ -176,5 +174,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.fruitAte = playerProfileSO.FruitAte;
         data.levelsCompleted = playerProfileSO.LevelsComplete;
         data.highScore = playerProfileSO.HighScore;
+        data.unlockedAchievements = playerProfileSO.UnlockedAchievements;
     }
 }

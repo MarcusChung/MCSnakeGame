@@ -9,7 +9,8 @@ public class Data
     public int fruitAte;
     public bool[] levelsCompleted;
     private const int NUM_LEVELS = 5;
-    private Dictionary<string, bool> unlockedAchievements = new Dictionary<string, bool>();
+    public string[] unlockedAchievements;
+    private const int MAX_ACHIEVEMENTS = 100;
     public string highScore;
     
     public Data()
@@ -18,6 +19,6 @@ public class Data
         fruitAte = 0;
         levelsCompleted = new bool[NUM_LEVELS];
         highScore = "0";
-        unlockedAchievements = new Dictionary<string, bool>();
+        unlockedAchievements = new string[MAX_ACHIEVEMENTS];
     }
 }

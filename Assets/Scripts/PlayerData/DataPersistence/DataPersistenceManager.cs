@@ -9,6 +9,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public static DataPersistenceManager instance { get; private set; }
     private Data gameData;
+    private const string PROFILE_PREFIX = "data.profile.";
     private List<IDataPersistence> dataPersistenceObjects;
 
     private FileDataHandler DataHandler;
@@ -27,7 +28,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void DeleteSave(string fileName)
     {
-        this.DataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.DataHandler = new FileDataHandler(Application.persistentDataPath, PROFILE_PREFIX + fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         this.gameData = new Data();
         foreach (IDataPersistence dataPersistenceObject in dataPersistenceObjects)
@@ -39,7 +40,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame(string fileName)
     {
-        this.DataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.DataHandler = new FileDataHandler(Application.persistentDataPath, PROFILE_PREFIX + fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         this.gameData = DataHandler.Load();
         if (this.gameData == null)
@@ -61,15 +62,14 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObject.SaveData(ref gameData);
         }
-        // Debug.Log("Saved death count = " + gameData.deathCount);
-
+        Debug.Log("Saved game");
         DataHandler.Save(gameData);
     }
 
     private void Start()
     {
         SceneManager.activeSceneChanged += ChangedActiveScene;
-        this.DataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.DataHandler = new FileDataHandler(Application.persistentDataPath, PROFILE_PREFIX + fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame("data.default");
     }
@@ -89,7 +89,7 @@ public class DataPersistenceManager : MonoBehaviour
             currentName = "Replaced";
         }
         SaveGame();
-        // Debug.Log("Scenes: " + currentName + ", " + next.name);
+        Debug.Log("Scenes: " + currentName + ", " + next.name);
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
