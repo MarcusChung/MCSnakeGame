@@ -14,10 +14,7 @@ public class LocalAchievementSys : IAchievement
             GameManager.Instance.playerProfileSO.UnlockedAchievements[achievementNum] = achievementName;
             OnAchievementUnlocked?.Invoke(achievementName);
             Debug.Log("Achievement unlocked!!!: " + achievementName);
-        } else {
-            // Debug.Log("Achievement already unlocked: " + achievementName);
         }
-
     }
 
     public bool HasAchievement(int achievementNum)
