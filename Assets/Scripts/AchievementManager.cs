@@ -7,6 +7,12 @@ public class AchievementManager : MonoBehaviour
     [SerializeField] private AchievementPanel achievementPanel;
     private static AchievementManager instance;
     private int currentProfile;
+    private const int FULL_HP = 5;
+    private const int LEVEL_ONE = 1;
+    private const int LEVEL_TWO = 2;
+    private const int LEVEL_THREE = 3;
+    private const int LEVEL_FOUR = 4;
+    private const int LEVEL_FIVE = 5;
     public static AchievementManager Instance
     {
         get
@@ -29,7 +35,6 @@ public class AchievementManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        // FindObjectOfType<DataPersistenceManager>().LoadGame(GameManager.Instance.currentProfile.ToString());
         ServiceLocator.AchievementSystem.OnAchievementUnlocked += OnAchievementUnlocked;
     }
 
@@ -54,22 +59,22 @@ public class AchievementManager : MonoBehaviour
         switch (totalFruitAte)
         {
             case int n when n >= 5:
-                ServiceLocator.AchievementSystem.UnlockAchievement(1, "Beginner");
+                ServiceLocator.AchievementSystem.UnlockAchievement(1, "Beginner- ate 5 fruits");
                 break;
             case int n when n >= 15:
-                ServiceLocator.AchievementSystem.UnlockAchievement(2, "Amateur");
+                ServiceLocator.AchievementSystem.UnlockAchievement(2, "Amateur- ate 15 fruits");
                 break;
             case int n when n >= 30:
-                ServiceLocator.AchievementSystem.UnlockAchievement(3, "Satiated");
+                ServiceLocator.AchievementSystem.UnlockAchievement(3, "Satiated- ate 30 fruits");
                 break;
             case int n when n >= 100:
-                ServiceLocator.AchievementSystem.UnlockAchievement(4, "Hungry");
+                ServiceLocator.AchievementSystem.UnlockAchievement(4, "Hungry- ate 100 fruits");
                 break;
             case int n when n >= 250:
-                ServiceLocator.AchievementSystem.UnlockAchievement(5, "Glutton");
+                ServiceLocator.AchievementSystem.UnlockAchievement(5, "Glutton- ate 250 fruits");
                 break;
             case int n when n >= 500:
-                ServiceLocator.AchievementSystem.UnlockAchievement(6, "Ravenous");
+                ServiceLocator.AchievementSystem.UnlockAchievement(6, "Ravenous- ate 500 fruits");
                 break;
         }
     }
@@ -78,30 +83,30 @@ public class AchievementManager : MonoBehaviour
     {
         if (totalDeaths == 0 && numOfLevelsComplete == GameManager.Instance.playerProfileSO.LevelsComplete.Length)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement(10, "Flawless");
+            ServiceLocator.AchievementSystem.UnlockAchievement(10, "Flawless- Completed all levels without dying once");
         }
     }
 
     public void NoDamageTakenAchievement(int hP, int level)
     {
-        string achievementName = "No Damage Taken on level " + level;
-        if (hP == 5 && level == 1)
+        string achievementName = "No Damage Taken on level ";
+        if (hP == FULL_HP && level == LEVEL_ONE)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement(11,  achievementName + level);
         }
-        else if (hP == 5 && level == 2)
+        else if (hP == FULL_HP && level == LEVEL_TWO)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement(12, achievementName + level);
         }
-        else if (hP == 5 && level == 3)
+        else if (hP == FULL_HP && level == LEVEL_THREE)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement(13, achievementName + level);
         }
-        else if (hP == 5 && level == 4)
+        else if (hP == FULL_HP && level == LEVEL_FOUR)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement(14, achievementName + level);
         }
-        else if (hP == 5 && level == 5)
+        else if (hP == FULL_HP && level == LEVEL_FIVE)
         {
             ServiceLocator.AchievementSystem.UnlockAchievement(15, achievementName + level);
         }
@@ -119,7 +124,7 @@ public class AchievementManager : MonoBehaviour
     {
         if (score == lastGameScore)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement(7, "Deja Vu");
+            ServiceLocator.AchievementSystem.UnlockAchievement(7, "De ja Vu- Got the same score as last game");
         }
     }
 }

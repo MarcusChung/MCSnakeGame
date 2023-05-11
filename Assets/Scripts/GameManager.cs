@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private int EndlessModeLevel = 6;
     private int numOfLevelsComplete = 0;
     public int prevLevelScore;
-    // [SerializeField] private AchievementPanel achievementPanel;
-    //the last score the player got on that level
     public float LastScore
     {
         get
