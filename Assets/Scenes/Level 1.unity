@@ -1494,6 +1494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   badFoodPrefab: {fileID: 6589184526673224328, guid: 3351bb7b8b9e1844dbcdd62ed3c8ab04, type: 3}
   numFoodObjects: 10
+  healthBar: {fileID: 0}
 --- !u!114 &1131465225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22033,17 +22034,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 326338295522373970, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 326338295522373970, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
       propertyPath: m_Color.b
-      value: 0.8018868
+      value: 0.9150943
       objectReference: {fileID: 0}
     - target: {fileID: 326338295522373970, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
       propertyPath: m_Color.g
-      value: 0.75566745
+      value: 0.8904904
       objectReference: {fileID: 0}
     - target: {fileID: 326338295522373970, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
       propertyPath: m_Color.r
-      value: 0.36690104
+      value: 0.6690548
       objectReference: {fileID: 0}
+    - target: {fileID: 326338295522373970, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 7c1b43dab80ac5f45b0b33c7ac940a8b, type: 3}
     - target: {fileID: 2177579220600659079, guid: df25a443dd417b543a0073f371b4caa8, type: 3}
       propertyPath: m_RootOrder
       value: 7

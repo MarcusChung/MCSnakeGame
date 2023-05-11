@@ -8,3 +8,4 @@ Play button arrowhead By Freepik
 Video pause button By Freepik 
 Home By Freepik 
 Snow fall By Vectorslab 
+Trophy by Freepik

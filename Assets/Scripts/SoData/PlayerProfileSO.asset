@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24411f5453373e642ba142bdc18a6f4e, type: 3}
   m_Name: PlayerProfileSO
   m_EditorClassIdentifier: 
-  _NumOfDeaths: 0
-  _LevelsComplete: 0100000000
-  _HighScore: 0
-  _currentLevel: 1
-  _currentProfile: 1
-  _fruitAte: 2
+  _numOfDeaths: 6
+  _levelsComplete: 0101010000
+  _highScore: 2
+  _currentLevel: 2
+  _currentProfile: 2
+  _fruitAte: 20
   _unlockedAchievements:
   - 
-  - 
+  - Beginner
   - 
   - 
   - 
@@ -29,8 +29,8 @@ MonoBehaviour:
   - Deja Vu
   - 
   - 
-  - Flawless
   - 
+  - No Damage Taken on level 1
   - 
   - 
   - 
@@ -119,3 +119,4 @@ MonoBehaviour:
   - 
   - 
   - 
+  _hP: 4

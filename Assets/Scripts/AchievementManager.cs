@@ -58,27 +58,44 @@ public class AchievementManager : MonoBehaviour
         Debug.Log("total fruit ate check: " + totalFruitAte);
         switch (totalFruitAte)
         {
-            case int n when n >= 5:
+            case 5:
                 ServiceLocator.AchievementSystem.UnlockAchievement(1, "Beginner- ate 5 fruits");
                 break;
-            case int n when n >= 15:
+            case 15:
                 ServiceLocator.AchievementSystem.UnlockAchievement(2, "Amateur- ate 15 fruits");
                 break;
-            case int n when n >= 30:
+            case 30:
                 ServiceLocator.AchievementSystem.UnlockAchievement(3, "Satiated- ate 30 fruits");
                 break;
-            case int n when n >= 100:
-                ServiceLocator.AchievementSystem.UnlockAchievement(4, "Hungry- ate 100 fruits");
+            case 50:
+                ServiceLocator.AchievementSystem.UnlockAchievement(4, "Bloated- ate 50 fruits");
                 break;
-            case int n when n >= 250:
-                ServiceLocator.AchievementSystem.UnlockAchievement(5, "Glutton- ate 250 fruits");
+            case 100:
+                ServiceLocator.AchievementSystem.UnlockAchievement(5, "Hungry- ate 100 fruits");
                 break;
-            case int n when n >= 500:
-                ServiceLocator.AchievementSystem.UnlockAchievement(6, "Ravenous- ate 500 fruits");
+            case 250:
+                ServiceLocator.AchievementSystem.UnlockAchievement(6, "Glutton- ate 250 fruits");
+                break;
+            case 500:
                 break;
         }
     }
-
+    public void CheckDeJaVuAchievement(int score, int lastGameScore)
+    {
+        if (score == lastGameScore)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(7, "De ja Vu- Got the same score as last game");
+        }
+    }
+    
+     public void CheckScoreAchievement(int score)
+    {
+        if (score == 1000)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(8, "YOU SCORED 1000 POINTS");
+        }
+    }
+    //skipped 9.
     public void CheckFlawlessAchievement(int totalDeaths, int numOfLevelsComplete)
     {
         if (totalDeaths == 0 && numOfLevelsComplete == GameManager.Instance.playerProfileSO.LevelsComplete.Length)
@@ -92,7 +109,7 @@ public class AchievementManager : MonoBehaviour
         string achievementName = "No Damage Taken on level ";
         if (hP == FULL_HP && level == LEVEL_ONE)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement(11,  achievementName + level);
+            ServiceLocator.AchievementSystem.UnlockAchievement(11, achievementName + level);
         }
         else if (hP == FULL_HP && level == LEVEL_TWO)
         {
@@ -112,19 +129,5 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
-    public void CheckScoreAchievement(int score)
-    {
-        if (score >= 2)
-        {
-            // Debug.Log("score achievement: " + score);
-            ServiceLocator.AchievementSystem.UnlockAchievement(6, "YOU SCORED 2 POINTS");
-        }
-    }
-    public void CheckDeJaVuAchievement(int score, int lastGameScore)
-    {
-        if (score == lastGameScore)
-        {
-            ServiceLocator.AchievementSystem.UnlockAchievement(7, "De ja Vu- Got the same score as last game");
-        }
-    }
+   
 }
