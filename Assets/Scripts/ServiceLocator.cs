@@ -12,7 +12,7 @@ public class ServiceLocator
         {
             if (achievementSystem == null)
             {
-                achievementSystem = new LocalAchievementSys(new DataManager());
+                achievementSystem = new LocalAchievementSys();
             }
             return achievementSystem;
         }

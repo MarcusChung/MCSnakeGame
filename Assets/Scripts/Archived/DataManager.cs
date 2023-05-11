@@ -225,13 +225,13 @@ public int SetNumOfLevelsComplete(int levelsComplete, int profile)
 //     gameData.achievementUnlocked[achievementNum] = unlocked;
 // }
 
-public void SaveAchievement(string achievementName, bool unlocked)
+public void SaveAchievement(string achievementName)
 {
     // Load the saved achievements
     Dictionary<string, bool> savedAchievements = LoadAchievements();
 
     // Add or update the achievement
-    savedAchievements[achievementName] = unlocked;
+    // savedAchievements[achievementName] = unlocked;
 
     // Convert the dictionary to JSON and save it to disk
     string dataToWrite = JsonUtility.ToJson(savedAchievements);

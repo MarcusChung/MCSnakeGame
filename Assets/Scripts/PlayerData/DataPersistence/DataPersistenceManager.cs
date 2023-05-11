@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class DataPersistenceManager : MonoBehaviour
 {
     [SerializeField] private string fileName;
@@ -14,25 +14,37 @@ public class DataPersistenceManager : MonoBehaviour
     private FileDataHandler DataHandler;
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            Debug.Log("Instance already exists");
+            instance = this;
         }
-        instance = this;
-
     }
 
-    public void NewGame()
+    private void NewGame()
     {
         this.gameData = new Data();
     }
 
-    public void LoadGame()
+    public void DeleteSave(string fileName)
     {
+        this.DataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        this.gameData = new Data();
+        foreach (IDataPersistence dataPersistenceObject in dataPersistenceObjects)
+        {
+            dataPersistenceObject.LoadData(gameData);
+        }
+        DataHandler.Save(gameData);
+    }
+
+    public void LoadGame(string fileName)
+    {
+        this.DataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         this.gameData = DataHandler.Load();
         if (this.gameData == null)
         {
-            Debug.Log("No game data found, using default initialization");
+            Debug.Log("No data found, using default");
             NewGame();
         }
 
@@ -43,7 +55,7 @@ public class DataPersistenceManager : MonoBehaviour
         // Debug.Log("Loaded death count = " + gameData.deathCount);
     }
 
-    public void SaveGame()
+    private void SaveGame()
     {
         foreach (IDataPersistence dataPersistenceObject in dataPersistenceObjects)
         {
@@ -56,14 +68,28 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
+        SceneManager.activeSceneChanged += ChangedActiveScene;
         this.DataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        LoadGame();
+        LoadGame("data.default");
     }
 
     private void OnApplicationQuit()
     {
         SaveGame();
+    }
+
+    //on application scene change, save game()
+    private void ChangedActiveScene(Scene current, Scene next)
+    {
+        string currentName = current.name;
+
+        if (currentName == null)
+        {
+            currentName = "Replaced";
+        }
+        SaveGame();
+        // Debug.Log("Scenes: " + currentName + ", " + next.name);
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()

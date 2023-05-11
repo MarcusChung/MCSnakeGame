@@ -7,9 +7,10 @@ public class PlayerProfileSO : ScriptableObject
 {
     [SerializeField] private int _NumOfDeaths;
     [SerializeField] private bool[] _LevelsComplete;
-    [SerializeField] private int _HighScore;
+    [SerializeField] private string _HighScore;
     [SerializeField] private Level _currentLevel;
     [SerializeField] private int _currentProfile;
+    [SerializeField] private int _fruitAte;
     public int NumOfDeaths
     {
         get { return _NumOfDeaths; }
@@ -22,7 +23,7 @@ public class PlayerProfileSO : ScriptableObject
         set { _LevelsComplete = value; }
     }
 
-    public int HighScore
+    public string HighScore
     {
         get { return _HighScore; }
         set { _HighScore = value; }
@@ -31,6 +32,12 @@ public class PlayerProfileSO : ScriptableObject
     public int CurrentProfile {
         get { return _currentProfile; }
         set { _currentProfile = value; }
+    }
+
+    public int FruitAte
+    {
+        get { return _fruitAte; }
+        set { _fruitAte = value; }
     }
 
     public enum Level
@@ -53,6 +60,7 @@ public class PlayerProfileSO : ScriptableObject
         _LevelsComplete = new bool[Enum.GetNames(typeof(Level)).Length];
         _currentProfile = 0;
         _NumOfDeaths = 0;
-        _HighScore = 0;
+        _HighScore = "0";
+        _fruitAte = 0;
     }
 }

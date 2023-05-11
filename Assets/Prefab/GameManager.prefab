@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7799950427280415083}
   - component: {fileID: 7799950427280415080}
   - component: {fileID: 3285235760239803809}
+  - component: {fileID: -1034815974961885065}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   scoreSO: {fileID: 0}
   playerProfileSO: {fileID: 0}
   currentProfile: 0
+  prevLevelScore: 0
 --- !u!114 &3285235760239803809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,3 +63,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievementPanel: {fileID: 0}
+--- !u!114 &-1034815974961885065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7799950427280415081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8655155e443c5469ab84623bbbd0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data.default
