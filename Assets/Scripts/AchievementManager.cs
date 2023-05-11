@@ -92,7 +92,10 @@ public class AchievementManager : MonoBehaviour
     {
         if (score == 1000)
         {
-            ServiceLocator.AchievementSystem.UnlockAchievement(8, "YOU SCORED 1000 POINTS");
+            ServiceLocator.AchievementSystem.UnlockAchievement(8, "Survivalist- Scored 100 points");
+        } else if (score == 100)
+        {
+            ServiceLocator.AchievementSystem.UnlockAchievement(9, "YOU SCORED 1000 POINTS");
         }
     }
     //skipped 9.

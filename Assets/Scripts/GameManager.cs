@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public bool isGameOver { get; private set; } = false;
     [SerializeField] private FloatSO scoreSO;
     [SerializeField] public PlayerProfileSO playerProfileSO;
-
     private const int LEVEL_SCORE_INCREMENT = 2;
     private Level currentLevel;
     public int currentProfile;
@@ -57,6 +56,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // Debug.Log("build index " + SceneManager.GetActiveScene().buildIndex);
         ResetScore();
     }
+    private void Start()
+    {
+        SceneManager.activeSceneChanged += ChangedActiveScene;
+    }
 
     public void ResetScore()
     {
@@ -83,7 +86,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         scoreSO.Value = score;
         LastScore = score;
         AchievementManager.Instance.CheckFruitAteAchievement(playerProfileSO.FruitAte);
-        AchievementManager.Instance.CheckDeJaVuAchievement(score, prevLevelScore);
+        AchievementManager.Instance.CheckScoreAchievement(score);
         //if the score matches the target to win the level
         if (score >= targetScore && (int)currentLevel != EndlessModeLevel)
         {
@@ -171,5 +174,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.levelsCompleted = playerProfileSO.LevelsComplete;
         data.highScore = playerProfileSO.HighScore;
         data.unlockedAchievements = playerProfileSO.UnlockedAchievements;
+    }
+
+    //on application scene change, save game()
+    private void ChangedActiveScene(Scene current, Scene next)
+    {
+        playerProfileSO.CurrentLevel = (PlayerProfileSO.Level)SceneManager.GetActiveScene().buildIndex;
     }
 }

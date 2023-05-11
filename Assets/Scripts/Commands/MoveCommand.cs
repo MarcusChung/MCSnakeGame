@@ -32,17 +32,15 @@ public class MoveCommand : Command
     }
     public override void Undo()
     {
-        // Debug.Log("Undoing command");
         gridPos = prevGridPos;
         entity.transform.position = gridPos;
         entity.transform.rotation = rotation.rotation;
         entity.SetDirection(prevDirection);
-        // Debug.Log("Snake segments: " + snakeSegments + " prevSnakeSegments: " + prevSnakeSegments);
-        if(snakeSegments > prevSnakeSegments)
-        {
-            // Debug.Log("Shrinking snake");
-            entity.RemoveSegment();
-        }
+        // if(snakeSegments > prevSnakeSegments)
+        // {
+        //     // Debug.Log("Shrinking snake");
+        //     entity.RemoveSegment();
+        // }
     }
 }
 

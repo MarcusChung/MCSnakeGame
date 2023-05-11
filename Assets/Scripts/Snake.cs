@@ -132,6 +132,10 @@ public class Snake : MonoBehaviour
             Shrink();
             DecrementScore();
             badFood.AccumulatePoison();
+            if (badFood.PoisonAccumulation == 5)
+            {
+                HideSnakeHead();
+            }
         }
         else if (other.gameObject.layer == FREEZE_ITEM)
         {
