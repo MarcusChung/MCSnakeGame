@@ -6,8 +6,6 @@ public class CommandProcessor : MonoBehaviour
 {
     private Stack<Command> _commands = new Stack<Command>();
 
-    private Snake snake;
-
     public void ExecuteCommand(MoveCommand command)
     {
         _commands.Push(command);

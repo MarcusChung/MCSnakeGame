@@ -19,11 +19,8 @@ public class MoveCommand : Command
     }
     public override void Execute()
     {
-        // Debug.Log("Executing command: Rotation = " + rotation.rotation);
-        // entity.transform.Translate(direction);
         prevDirection = entity.GetDirection();
         entity.SetDirection(direction);
-
         prevGridPos = gridPos;
         gridPos += direction;
         entity.transform.position = gridPos;
